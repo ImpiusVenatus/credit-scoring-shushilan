@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
+import { toast, useToast } from "@/components/ui/use-toast"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select"
 
@@ -70,12 +70,43 @@ export function CreditScoringForm() {
     },
   })
 
+  function calculateCreditScore(data: z.infer<typeof FormSchema>): number {
+    let score = 0
+
+    score += data.age >= 18 && data.age <= 25 ? 10 : data.age <= 40 ? 8 : 5
+    score += data.gender === "Male" ? 5 : 5
+    score += data.maritalStatus === "Married" ? 10 : 5
+    score += data.householdSize > 4 ? 10 : 5
+    score += data.primaryIncomeSource === "Regular salaried job" ? 15 : 10
+    score += data.secondaryIncomeSources === "No secondary income" ? 5 : 10
+    score += data.monthlyIncome === "Above average" ? 20 : data.monthlyIncome === "Average" ? 15 : 10
+    score += data.monthlyExpenses === "Low expenses" ? 10 : data.monthlyExpenses === "Moderate expenses" ? 5 : 0
+    score += data.financialLiteracy === "High understanding" ? 10 : data.financialLiteracy === "Moderate understanding" ? 5 : 0
+    score += data.attitudeTowardsDebt === "Positive and responsible" ? 10 : data.attitudeTowardsDebt === "Neutral" ? 5 : 0
+    score += data.riskTolerance === "High risk tolerance" ? 10 : data.riskTolerance === "Moderate risk tolerance" ? 5 : 0
+    score += data.futureOrientation === "Plans and saves for future" ? 10 : data.futureOrientation === "Occasional planning" ? 5 : 0
+    score += data.spendingPatterns === "Saves regularly" ? 10 : data.spendingPatterns === "Occasional savings" ? 5 : 0
+    score += data.savingHabits === "Consistent savings" ? 10 : data.savingHabits === "Irregular savings" ? 5 : 0
+    score += data.repaymentHistory === "Always on time" ? 10 : data.repaymentHistory === "Occasionally late" ? 5 : 0
+    score += data.mobileMoneyUsage === "Regular and high usage" ? 10 : data.mobileMoneyUsage === "Moderate usage" ? 5 : 0
+    score += data.peerAssessments === "Highly trusted" ? 10 : data.peerAssessments === "Moderately trusted" ? 5 : 0
+    score += data.communityParticipation === "Active participant" ? 10 : data.communityParticipation === "Occasional participant" ? 5 : 0
+    score += data.communityReputation === "Highly respected" ? 10 : data.communityReputation === "Moderately respected" ? 5 : 0
+    score += data.proximityToFinancialServices === "Close proximity" ? 10 : data.proximityToFinancialServices === "Moderate distance" ? 5 : 0
+    score += data.marketAccess === "Close proximity" ? 10 : data.marketAccess === "Moderate distance" ? 5 : 0
+
+    return score
+  }
+
+  const { toast } = useToast();
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    const score = calculateCreditScore(data)
     toast({
-      title: "You submitted the following values:",
+      title: "Credit Score Calculated",
       description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+          <code className="text-white">Score: {score}</code>
         </pre>
       ),
     })
@@ -92,7 +123,12 @@ export function CreditScoringForm() {
             <FormItem>
               <FormLabel>Age</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Age" {...field} />
+                <Input 
+                  type="number" 
+                  placeholder="Age" 
+                  {...field} 
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -167,7 +203,12 @@ export function CreditScoringForm() {
             <FormItem>
               <FormLabel>Household Size</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Household Size" {...field} />
+                <Input 
+                  type="number" 
+                  placeholder="Household Size" 
+                  {...field} 
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
