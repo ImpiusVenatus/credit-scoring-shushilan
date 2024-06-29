@@ -98,15 +98,28 @@ export function CreditScoringForm() {
     return score
   }
 
+  function determineLoanApproval(score: number): string {
+    if (score >= 150) {
+      return "Approved"
+    } else if (score >= 100) {
+      return "Approved with Conditions"
+    } else {
+      return "Not Approved"
+    }
+  }
+
   const { toast } = useToast();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const score = calculateCreditScore(data)
+    const approvalStatus = determineLoanApproval(score)
     toast({
       title: "Credit Score Calculated",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
           <code className="text-white">Score: {score}</code>
+          <br />
+          <code className="text-white">Loan Approval: {approvalStatus}</code>
         </pre>
       ),
     })
