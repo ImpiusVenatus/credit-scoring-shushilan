@@ -49,16 +49,10 @@ const Footer = () => {
             <ul>
               <li className="mb-2 text-gray-600">UAB HES Europe, Vilnius Konstitucijos pr. 21A</li>
               <li className="mb-2 text-gray-600">invite@ginimachine.com</li>
-              <li className="mb-2">
-                <a href="#" className="text-gray-600"> 
+              <li className="mb-2 flex gap-2">
                     <SocialIcon network="facebook" href="https://www.facebook.com" />
-                </a>
-                <a href="#" className="text-gray-600 mx-2">
                     <SocialIcon network="linkedin" href="https://www.linkedin.com" />
-                </a>
-                <a href="#" className="text-gray-600">
                     <SocialIcon network="x" href="https://www.x.com" />
-                </a>
               </li>
             </ul>
             <div className="flex gap-4">

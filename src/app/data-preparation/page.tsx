@@ -21,7 +21,7 @@ export default function DataPreparation() {
             designed to enhance the accuracy of your ML models.
             </p>
             <div className="flex justify-start gap-16">
-              <button className="shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-md text-white font-light transition duration-200 ease-linear">
+              <button className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
                 Get Dataset
               </button>
             </div>
@@ -40,21 +40,21 @@ export default function DataPreparation() {
         <div className="flex flex-wrap justify-between py-8">
           <div className="w-[50%] flex flex-wrap">
             <div className="flex items-center gap-2 py-4">
-              <FaCheck className="text-4xl bg-blue-600 text-white rounded-full p-2" />
+              <FaCheck className="text-4xl bg-teal-400 text-white rounded-full p-2" />
               <p className="text-[#74788b] w-[70%]">Machine learning engineer oversight</p>
             </div>
             <div className="flex items-center gap-2 py-4">
-              <FaCheck className="text-4xl bg-blue-600 text-white rounded-full p-2" />
+              <FaCheck className="text-4xl bg-teal-400 text-white rounded-full p-2" />
               <p className="text-[#74788b] w-[70%]">Reduce data loss by 50%</p>
             </div>
           </div>
           <div className="w-[50%] flex flex-wrap">
             <div className="flex items-center gap-2 py-4">
-              <FaCheck className="text-4xl bg-blue-600 text-white rounded-full p-2" />
+              <FaCheck className="text-4xl bg-teal-400 text-white rounded-full p-2" />
               <p className="text-[#74788b] w-[70%]">99% fewer errors and inaccuracies</p>
             </div>
             <div className="flex items-center gap-2 py-4">
-              <FaCheck className="text-4xl bg-blue-600 text-white rounded-full p-2" />
+              <FaCheck className="text-4xl bg-teal-400 text-white rounded-full p-2" />
               <p className="text-[#74788b] w-[70%]">90% more precise ML model</p>
             </div>
           </div>

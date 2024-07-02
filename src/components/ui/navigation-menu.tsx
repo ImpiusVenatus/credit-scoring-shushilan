@@ -1,43 +1,62 @@
-import * as React from "react"
-import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
-import { cva } from "class-variance-authority"
-import { ChevronDown } from "lucide-react"
+import * as React from "react";
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
+import { cva } from "class-variance-authority";
+import { ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
-import Image from "next/image"
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <NavigationMenuPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative z-10 flex max-w-[80rem] flex-1 items-center justify-between mx-auto py-4 px-8",
-      className
-    )}
-    {...props}
-  >
-      <div>
+>(({ className, children, ...props }, ref) => {
+  const pathname = usePathname();
+  const isDashboard = pathname === "/dashboard";
+
+  return (
+    <NavigationMenuPrimitive.Root
+      ref={ref}
+      className={cn(
+        "relative z-10 flex max-w-[80rem] flex-1 items-center justify-between mx-auto py-4 px-8",
+        className
+      )}
+      {...props}
+    >
+      <div className="flex items-center gap-2 bg-gray-700 py-4 px-6 rounded-2xl">
         <Image 
-          src="/next.svg"
+          src="/R.png"
           alt="Logo"
           width={100}
           height={100}
           layout="responsive"
-          className="max-w-[6rem]"
+          className="max-w-[2rem]"
         />
+        <span className="font-bold text-[#2dd4bf] text-2xl">Rini</span>
       </div>
-      <div className="flex gap-12">
+      <div className="flex gap-12 cursor-pointer">
         {children}
-        <button className="px-8 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200">
-          Get a Demo
-        </button>
+        {isDashboard ? (
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        ) : (
+          <button className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+            Get a Demo
+          </button>
+        )}
       </div>
-    <NavigationMenuViewport />
-  </NavigationMenuPrimitive.Root>
-))
-NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
+      <NavigationMenuViewport />
+    </NavigationMenuPrimitive.Root>
+  );
+});
+NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
 
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
