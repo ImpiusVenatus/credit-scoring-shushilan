@@ -1,132 +1,97 @@
-
-"use client"
-import React from "react";
-import { Step1Schema, FormSchemaType } from "./schemas";
-
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { useState } from 'react';
+import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-
-interface StepProps {
-  formData: FormSchemaType;
-  setFormData: React.Dispatch<React.SetStateAction<FormSchemaType>>;
-  onNext: () => void;
+interface Step1Props {
+  formData: { firstName: string; lastName: string };
+  setFormData: React.Dispatch<React.SetStateAction<{ firstName: string; lastName: string }>>;
+  nextStep: () => void;
 }
 
-const Step1: React.FC<StepProps> = ({ formData, setFormData, onNext }) => {
-  const form = useForm({
-    resolver: zodResolver(Step1Schema),
-    defaultValues: {
-      age: formData.age || 18,
-      gender: formData.gender || "Male",
-      maritalStatus: formData.maritalStatus || "Single",
-    },
-  });
+const Step1Form: React.FC<Step1Props> = ({ formData, setFormData, nextStep }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-
-  function onSubmit(data: z.infer<typeof Step1Schema>) {
-    setFormData((prevData) => ({ ...prevData, ...data }));
-    onNext();
-  }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    nextStep();
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-      <FormField
-          control={form.control}
-          name="age"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Age</FormLabel>
-              <FormControl>
-                <Input 
-                  type="number" 
-                  placeholder="Age" 
-                  {...field} 
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      <FormField
-          control={form.control}
-          name="gender"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>Gender</FormLabel>
-              <FormControl>
-                <RadioGroup 
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="Male" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      Male
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="Female" />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      FeMale
-                    </FormLabel>
-                  </FormItem>
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      <FormField
-          control={form.control}
-          name="maritalStatus"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Marital Status</FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a marital status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Single">Single</SelectItem>
-                    <SelectItem value="Married">Married</SelectItem>
-                    <SelectItem value="Divorced/Widowed">Divorced/Widowed</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      <button type="submit" className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
-        Next
-      </button>
-    </form>
-    </Form>
+    <div className="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4 border border-gray-800/40">
+      <h2 className="text-2xl text-gray-800 font-bold mb-6">Step 1: Personal Information</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
+            First Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="firstName"
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+            Last Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="lastName"
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <Label htmlFor="framework">Framework</Label>
+              <Select>
+                <SelectTrigger id="framework">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="next">Next.js</SelectItem>
+                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
+                  <SelectItem value="astro">Astro</SelectItem>
+                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                </SelectContent>
+              </Select>
+        </div>
+        <div className="mb-6">
+          <Label htmlFor="email">Email</Label>
+          <Input type="email" placeholder="Email" />
+        </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default Step1;
+export default Step1Form;

@@ -1,66 +1,129 @@
-import { z } from "zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Step3Schema, FormSchemaType } from "./schemas";
+import { useState } from 'react';
 
-interface StepProps {
-  formData: FormSchemaType;
-  setFormData: React.Dispatch<React.SetStateAction<FormSchemaType>>;
-  onNext: () => void;
-  onPrev: () => void;
+interface Step3Props {
+  formData: { address: string; city: string; zipCode: string; country: string; phone: string };
+  setFormData: React.Dispatch<React.SetStateAction<{
+    address: string;
+    city: string;
+    zipCode: string;
+    country: string;
+    phone: string;
+  }>>;
+  prevStep: () => void;
+  nextStep: () => void;
 }
 
-const Step3: React.FC<StepProps> = ({ formData, setFormData, onNext, onPrev }) => {
-  const form = useForm({
-    resolver: zodResolver(Step3Schema),
-    defaultValues: {
-      monthlyIncome: formData.monthlyIncome || 0,
-      monthlyExpenses: formData.monthlyExpenses || 0,
-      financialLiteracy: formData.financialLiteracy || "Low",
-      attitudeTowardsDebt: formData.attitudeTowardsDebt || "Negative",
-    },
-  });
+const Step3Form: React.FC<Step3Props> = ({ formData, setFormData, prevStep, nextStep }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-  const handleSubmit = (data: z.infer<typeof Step3Schema>) => {
-    setFormData((prevData) => ({ ...prevData, ...data }));
-    onNext();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    nextStep();
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)} className="w-2/3 space-y-6">
-      <div>
-        <label>Monthly Income</label>
-        <input {...form.register("monthlyIncome")} type="number" />
-        <p>{form.formState.errors.monthlyIncome?.message}</p>
-      </div>
-      <div>
-        <label>Monthly Expenses</label>
-        <input {...form.register("monthlyExpenses")} type="number" />
-        <p>{form.formState.errors.monthlyExpenses?.message}</p>
-      </div>
-      <div>
-        <label>Financial Literacy</label>
-        <select {...form.register("financialLiteracy")}>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <p>{form.formState.errors.financialLiteracy?.message}</p>
-      </div>
-      <div>
-        <label>Attitude Towards Debt</label>
-        <select {...form.register("attitudeTowardsDebt")}>
-          <option value="Negative">Negative</option>
-          <option value="Neutral">Neutral</option>
-          <option value="Positive">Positive</option>
-        </select>
-        <p>{form.formState.errors.attitudeTowardsDebt?.message}</p>
-      </div>
-      <button type="button" onClick={onPrev}>Previous</button>
-      <button type="submit">Next</button>
-    </form>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-2xl text-teal-400 font-bold mb-6">Step 3: Address Information</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
+            Address
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="address"
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
+            City
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="city"
+            type="text"
+            name="city"
+            placeholder="City"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="zipCode">
+            Zip Code
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="zipCode"
+            type="text"
+            name="zipCode"
+            placeholder="Zip Code"
+            value={formData.zipCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">
+            Country
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="country"
+            type="text"
+            name="country"
+            placeholder="Country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+            Phone
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="phone"
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="flex justify-between">
+          <button
+            className="transition-all bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={prevStep}
+          >
+            Previous
+          </button>
+          <button
+            className="transition-all bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default Step3;
+export default Step3Form;

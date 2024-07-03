@@ -21,11 +21,13 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@types/csv-parse": "^1.2.2",
     "@types/formidable": "^3.4.5",
+    "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "csv-parse": "^5.5.6",
     "formidable": "^3.5.1",
+    "json2csv": "^6.0.0-alpha.2",
     "lucide-react": "^0.396.0",
     "next": "14.2.4",
     "next-auth": "^4.24.7",
@@ -41,6 +43,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/json2csv": "^5.0.7",
     "@types/node": "^20",
     "@types/papaparse": "^5.3.14",
     "@types/react": "^18",

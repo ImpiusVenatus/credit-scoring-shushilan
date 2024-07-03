@@ -1,144 +1,58 @@
-import { z } from "zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Step4Schema, FormSchemaType } from "./schemas";
+import { useState } from 'react';
 
-interface StepProps {
-  formData: FormSchemaType;
-  setFormData: React.Dispatch<React.SetStateAction<FormSchemaType>>;
-  onSubmit: (data: FormSchemaType) => void;
-  onPrev: () => void;
+interface Step4Props {
+  formData: { interest: string };
+  setFormData: React.Dispatch<React.SetStateAction<{ interest: string }>>;
+  prevStep: () => void;
+  handleSubmit: () => void;
 }
 
-const Step4: React.FC<StepProps> = ({ formData, setFormData, onSubmit, onPrev }) => {
-  const form = useForm({
-    resolver: zodResolver(Step4Schema),
-    defaultValues: {
-      riskTolerance: formData.riskTolerance || "Low",
-      futureOrientation: formData.futureOrientation || "Low",
-      spendingPatterns: formData.spendingPatterns || "Frugal",
-      savingHabits: formData.savingHabits || "Poor",
-      repaymentHistory: formData.repaymentHistory || "Poor",
-      mobileMoneyUsage: formData.mobileMoneyUsage || "Never",
-      peerAssessments: formData.peerAssessments || "Poor",
-      communityParticipation: formData.communityParticipation || "Low",
-      communityReputation: formData.communityReputation || "Poor",
-      proximityToFinancialServices: formData.proximityToFinancialServices || "Far",
-      marketAccess: formData.marketAccess || "Poor",
-    },
-  });
-
-  const handleSubmit = (data: z.infer<typeof Step4Schema>) => {
-    setFormData((prevData) => ({ ...prevData, ...data }));
-    onSubmit({ ...formData, ...data });
+const Step4Form: React.FC<Step4Props> = ({ formData, setFormData, prevStep, handleSubmit }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSubmit)} className="w-2/3 space-y-6">
-      <div>
-        <label>Risk Tolerance</label>
-        <select {...form.register("riskTolerance")}>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <p>{form.formState.errors.riskTolerance?.message}</p>
-      </div>
-      <div>
-        <label>Future Orientation</label>
-        <select {...form.register("futureOrientation")}>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <p>{form.formState.errors.futureOrientation?.message}</p>
-      </div>
-      <div>
-        <label>Spending Patterns</label>
-        <select {...form.register("spendingPatterns")}>
-          <option value="Frugal">Frugal</option>
-          <option value="Average">Average</option>
-          <option value="Lavish">Lavish</option>
-        </select>
-        <p>{form.formState.errors.spendingPatterns?.message}</p>
-      </div>
-      <div>
-        <label>Saving Habits</label>
-        <select {...form.register("savingHabits")}>
-          <option value="Poor">Poor</option>
-          <option value="Average">Average</option>
-          <option value="Good">Good</option>
-        </select>
-        <p>{form.formState.errors.savingHabits?.message}</p>
-      </div>
-      <div>
-        <label>Repayment History</label>
-        <select {...form.register("repaymentHistory")}>
-          <option value="Poor">Poor</option>
-          <option value="Average">Average</option>
-          <option value="Good">Good</option>
-        </select>
-        <p>{form.formState.errors.repaymentHistory?.message}</p>
-      </div>
-      <div>
-        <label>Mobile Money Usage</label>
-        <select {...form.register("mobileMoneyUsage")}>
-          <option value="Never">Never</option>
-          <option value="Occasionally">Occasionally</option>
-          <option value="Frequently">Frequently</option>
-        </select>
-        <p>{form.formState.errors.mobileMoneyUsage?.message}</p>
-      </div>
-      <div>
-        <label>Peer Assessments</label>
-        <select {...form.register("peerAssessments")}>
-          <option value="Poor">Poor</option>
-          <option value="Average">Average</option>
-          <option value="Good">Good</option>
-        </select>
-        <p>{form.formState.errors.peerAssessments?.message}</p>
-      </div>
-      <div>
-        <label>Community Participation</label>
-        <select {...form.register("communityParticipation")}>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <p>{form.formState.errors.communityParticipation?.message}</p>
-      </div>
-      <div>
-        <label>Community Reputation</label>
-        <select {...form.register("communityReputation")}>
-          <option value="Poor">Poor</option>
-          <option value="Average">Average</option>
-          <option value="Good">Good</option>
-        </select>
-        <p>{form.formState.errors.communityReputation?.message}</p>
-      </div>
-      <div>
-        <label>Proximity to Financial Services</label>
-        <select {...form.register("proximityToFinancialServices")}>
-          <option value="Far">Far</option>
-          <option value="Average">Average</option>
-          <option value="Near">Near</option>
-        </select>
-        <p>{form.formState.errors.proximityToFinancialServices?.message}</p>
-      </div>
-      <div>
-        <label>Market Access</label>
-        <select {...form.register("marketAccess")}>
-          <option value="Poor">Poor</option>
-          <option value="Average">Average</option>
-          <option value="Good">Good</option>
-        </select>
-        <p>{form.formState.errors.marketAccess?.message}</p>
-      </div>
-      <button type="button" onClick={onPrev}>Previous</button>
-      <button type="submit">Submit</button>
-    </form>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-2xl text-teal-400 font-bold mb-6">Step 4: Additional Information</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="interest">
+            Interest
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="interest"
+            type="text"
+            name="interest"
+            placeholder="Interest"
+            value={formData.interest}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="flex justify-between">
+          <button
+            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={prevStep}
+          >
+            Previous
+          </button>
+          <button
+            className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default Step4;
+export default Step4Form;

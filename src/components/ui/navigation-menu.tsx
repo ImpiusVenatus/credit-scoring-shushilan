@@ -28,17 +28,19 @@ const NavigationMenu = React.forwardRef<
       )}
       {...props}
     >
-      <div className="flex items-center gap-2 bg-gray-700 py-4 px-6 rounded-2xl">
-        <Image 
-          src="/R.png"
-          alt="Logo"
-          width={100}
-          height={100}
-          layout="responsive"
-          className="max-w-[2rem]"
-        />
-        <span className="font-bold text-[#2dd4bf] text-2xl">Rini</span>
-      </div>
+      <a href="/home">
+        <div className="curson-pointer flex items-center gap-2 bg-gray-700 py-4 px-6 rounded-2xl">
+            <Image 
+              src="/R.png"
+              alt="Logo"
+              width={100}
+              height={100}
+              layout="responsive"
+              className="max-w-[2rem]"
+            />
+          <span className="font-bold text-[#2dd4bf] text-2xl">Rini</span>
+        </div>
+      </a>
       <div className="flex gap-12 cursor-pointer">
         {children}
         {isDashboard ? (
