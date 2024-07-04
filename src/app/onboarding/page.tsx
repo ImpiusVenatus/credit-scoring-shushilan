@@ -16,9 +16,9 @@ export function MultiStepFormPage() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="relative flex flex-col gap-4 items-center justify-center px-4"
+        className="relative flex flex-col gap-4 items-center justify-center px-4 py-16"
       >
-        <h1 className="text-5xl py-2 mb-16 text-gray-800 font-bold">Rini Model Demo</h1>
+        <h1 className="text-5xl mb-8 text-gray-800 font-bold">Rini Model Demo</h1>
         <MultiStepForm />
       </motion.div>
     </AuroraBackground>

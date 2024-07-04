@@ -1,71 +1,203 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import Step1Form from './Step1';
-import Step2Form from './Step2';
-import Step3Form from './Step3';
-import Step4Form from './Step4';
+import React, { useState } from 'react';
+import DemographicsForm from './DemographicForm';
+import BusinessQuestionsForm from './BusinessQuestionsForm';
+import LandFarmingForm from './LandAndFarmingActivity';
+import FinancialPlanningForm from './FinancialLiteracyPlanning';
+import SocialNetworkForm from './SocialNetworking';
 
-const MultiStepForm = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+interface FormData {
+  ageRange: string;
+  gender: string;
+  maritalStatus: string;
+  dependents: string;
+  educationLevel: string;
+  primaryOccupation: string;
+  secondaryOccupation: boolean;
+  residenceDuration: string;
+  homeOwnership: string;
+  householdSize: string;
+  profession: string;
+  businessDuration: string;
+  productTypes: string;
+  monthlyRevenue: string;
+  regularCustomers: boolean;
+  businessLicense: boolean;
+  salesRecords: boolean;
+  savingsAccount: boolean;
+  businessLoan: string;
+  creditManagement: string;
+  loanPurpose: string;
+  awareOfTerms: boolean;
+  ownAgriculturalLand: boolean;
+  acresOwned: string;
+  cropTypes: string;
+  cropCyclesPerYear: string;
+  cropRotation: boolean;
+  irrigationFacilities: boolean;
+  ownLivestock: boolean;
+  livestockTypes: string;
+  livestockCount: string;
+  farmingExperience: string;
+  modernFarmingTechniques: boolean;
+  farmingTechniquesUsed: string;
+  annualCropYield: string;
+  sellProduceLocally: boolean;
+  storageFacilities: boolean;
+  cropLossPastFiveYears: boolean;
+  cropLossReasons: string;
+  phoneType: string;
+  useMobileForTransactions: boolean;
+  haveSavingsAccount: boolean;
+  otherFormsOfSavings: boolean;
+  takenLoanBefore: boolean;
+  loanRepaidOnTime: boolean;
+  outstandingLoans: boolean;
+  budgetMonthlyExpenses: boolean;
+  keepFinancialRecords: boolean;
+  formalFinancialEducation: boolean;
+  communityMember: boolean;
+  leadershipPosition: boolean;
+  participateCommunityEvents: boolean;
+  goodReputation: boolean;
+  recommendedForLoan: boolean;
+  familySuccessfulLoans: boolean;
+  collaborateCommunity: boolean;
+  disputesCommunity: boolean;
+  interactLocalLeaders: string;
+  socialSupport: boolean;
+}
 
-  // Form data state for each step
-  const [formData1, setFormData1] = useState({ firstName: '', lastName: '' });
-  const [formData2, setFormData2] = useState({ email: '', password: '' });
-  const [formData3, setFormData3] = useState({ address: '', city: '', zipCode: '', country: '', phone: '' });
-  const [formData4, setFormData4] = useState({ interest: '' });
+const MultiStepFormContainer: React.FC = () => {
+  const [step, setStep] = useState(1);
+
+  const [formData, setFormData] = useState<FormData>({
+    ageRange: '',
+    gender: '',
+    maritalStatus: '',
+    dependents: '',
+    educationLevel: '',
+    primaryOccupation: '',
+    secondaryOccupation: false,
+    residenceDuration: '',
+    homeOwnership: '',
+    householdSize: '',
+    profession: '',
+    businessDuration: '',
+    productTypes: '',
+    monthlyRevenue: '',
+    regularCustomers: false,
+    businessLicense: false,
+    salesRecords: false,
+    savingsAccount: false,
+    businessLoan: '',
+    creditManagement: '',
+    loanPurpose: '',
+    awareOfTerms: false,
+    ownAgriculturalLand: false,
+    acresOwned: '',
+    cropTypes: '',
+    cropCyclesPerYear: '',
+    cropRotation: false,
+    irrigationFacilities: false,
+    ownLivestock: false,
+    livestockTypes: '',
+    livestockCount: '',
+    farmingExperience: '',
+    modernFarmingTechniques: false,
+    farmingTechniquesUsed: '',
+    annualCropYield: '',
+    sellProduceLocally: false,
+    storageFacilities: false,
+    cropLossPastFiveYears: false,
+    cropLossReasons: '',
+    phoneType: '',
+    useMobileForTransactions: false,
+    haveSavingsAccount: false,
+    otherFormsOfSavings: false,
+    takenLoanBefore: false,
+    loanRepaidOnTime: false,
+    outstandingLoans: false,
+    budgetMonthlyExpenses: false,
+    keepFinancialRecords: false,
+    formalFinancialEducation: false,
+    communityMember: false,
+    leadershipPosition: false,
+    participateCommunityEvents: false,
+    goodReputation: false,
+    recommendedForLoan: false,
+    familySuccessfulLoans: false,
+    collaborateCommunity: false,
+    disputesCommunity: false,
+    interactLocalLeaders: '',
+    socialSupport: false,
+  });  
 
   const nextStep = () => {
-    setCurrentStep(prevStep => prevStep + 1);
+    setStep(prevStep => prevStep + 1);
   };
 
   const prevStep = () => {
-    setCurrentStep(prevStep => prevStep - 1);
+    setStep(prevStep => prevStep - 1);
   };
 
-  const handleSubmit = () => {
-    // Handle final form submission
-    console.log('Final Form Data:', {
-      ...formData1,
-      ...formData2,
-      ...formData3,
-      ...formData4,
-    });
-    // Add your submission logic here (e.g., API call)
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <DemographicsForm
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+          />
+        );
+      case 2:
+        return (
+          <BusinessQuestionsForm
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        );
+      case 3:
+        return (
+          <LandFarmingForm
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )
+      case 4:
+        return (
+          <FinancialPlanningForm
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )
+      case 5:
+        return (
+          <SocialNetworkForm 
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        )
+      default:
+        return null;
+    }
   };
 
-  // Calculate width of progress bar
-  const progressBarWidth = `${((currentStep - 1) / 3) * 100}%`;
+  console.log('Current Form Data:', formData);
 
   return (
     <div>
-      <div>
-        {currentStep === 1 && (
-          <Step1Form formData={formData1} setFormData={setFormData1} nextStep={nextStep} />
-        )}
-        {currentStep === 2 && (
-          <Step2Form formData={formData2} setFormData={setFormData2} prevStep={prevStep} nextStep={nextStep} />
-        )}
-        {currentStep === 3 && (
-          <Step3Form formData={formData3} setFormData={setFormData3} prevStep={prevStep} nextStep={nextStep} />
-        )}
-        {currentStep === 4 && (
-          <Step4Form formData={formData4} setFormData={setFormData4} prevStep={prevStep} handleSubmit={handleSubmit} />
-        )}
-      </div>
-      {/* Progress tracker */}
-      <div className="mt-8">
-        <p className="mb-2">Step {currentStep} of 4</p>
-        <div className="w-full bg-gray-300 h-3">
-          <motion.div
-            initial={{ width: '0%' }}
-            animate={{ width: progressBarWidth }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="bg-teal-400 h-full"
-          />
-        </div>
-      </div>
+      {renderStep()}
     </div>
   );
 };
 
-export default MultiStepForm;
+export default MultiStepFormContainer;
