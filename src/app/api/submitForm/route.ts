@@ -3,7 +3,7 @@ import { MongoClient, MongoNetworkError, ServerApiVersion } from 'mongodb';
 import { Parser } from 'json2csv';
 
 interface FormData {
-   // Demographic details (already defined)
+  // Demographic details
   ageRange: string;
   gender: string;
   maritalStatus: string;
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
     const farmingScore = calculateFarmingScore(formData);
     const financeScore = calculateFinanceScore(formData);
     const socialScore = calculateSocialScore(formData);
-    const totalScore = demographicsScore + businessScore + farmingScore + financeScore + socialScore;
+    const totalScore = (demographicsScore*0.2) + ((businessScore + farmingScore)*0.25) + (financeScore*0.30) + (socialScore*0.25);
 
     const json2csvParser = new Parser();
     const csv = json2csvParser.parse(formData);
@@ -287,7 +287,13 @@ function calculateDemographicsScore(formData: FormData): number {
       break;
   }
 
+  if (demographicsScore >= 100) {
+    demographicsScore = 100;
+    return demographicsScore;
+  }
+  else {
   return demographicsScore;
+  }
 }
 
 function calculateBusinessScore(formData: FormData): number {
@@ -407,7 +413,13 @@ function calculateBusinessScore(formData: FormData): number {
     businessScore += 5;
   }
 
+  if (businessScore >= 100) {
+    businessScore = 100;
+    return businessScore;
+  }
+  else {
   return businessScore;
+  }
 }
 
 function calculateFarmingScore(formData: FormData): number {
@@ -606,7 +618,13 @@ function calculateFarmingScore(formData: FormData): number {
       break;
   }
 
+  if (farmingScore >= 100) {
+    farmingScore = 100;
+    return farmingScore;
+  }
+  else {
   return farmingScore;
+  }
 }
 
 function calculateFinanceScore(formData: FormData): number {
@@ -685,7 +703,13 @@ function calculateFinanceScore(formData: FormData): number {
     financeScore += 5;
   }
 
+  if (financeScore >= 100) {
+    financeScore = 100;
+    return financeScore;
+  }
+  else {
   return financeScore;
+  }
 }
 
 function calculateSocialScore(formData: FormData): number {
@@ -771,6 +795,12 @@ function calculateSocialScore(formData: FormData): number {
     socialScore += 5;
   }
 
+  if (socialScore >= 100) {
+    socialScore = 100;
+    return socialScore;
+  }
+  else {
   return socialScore;
+  }
 }
 
