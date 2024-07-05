@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { AuroraBackground } from '@/components/ui/aurora-background';
-import MultiStepForm from '@/components/forms/MultiStepForm';
+import MultiStepFormContainer from "@/components/forms/MultiStepForm";
  
 export function MultiStepFormPage() {
   return (
@@ -19,7 +19,7 @@ export function MultiStepFormPage() {
         className="relative flex flex-col gap-4 items-center justify-center px-4 py-16"
       >
         <h1 className="text-5xl mb-8 text-gray-800 font-bold">Rini Model Demo</h1>
-        <MultiStepForm />
+        <MultiStepFormContainer />
       </motion.div>
     </AuroraBackground>
   );
