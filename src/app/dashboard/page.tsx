@@ -1,4 +1,3 @@
-// pages/index.tsx
 "use client";
 import Footer from "@/components/Footer";
 import { NavigationMenuBar } from "@/components/ShadcnNavbar";
@@ -111,7 +110,7 @@ export default function Home() {
           </div>
         </div>
         <div className="py-4">
-          <h4 className="text-2xl font-semibold">Predicted Data</h4>
+          <h4 className="text-2xl font-semibold">Current Data</h4>
           <DataTable />
         </div>
       </div>
