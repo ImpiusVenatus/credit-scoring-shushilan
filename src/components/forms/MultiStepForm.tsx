@@ -7,6 +7,13 @@ import LandFarmingForm from './LandAndFarmingActivity';
 import FinancialPlanningForm from './FinancialLiteracyPlanning';
 import SocialNetworkForm from './SocialNetworking';
 import CommunityVouchingForm from './CommunityVouching';
+import { MultiStepLoader  } from '../ui/multi-step-loader';
+
+const loadingStates = [
+  { text: "Logging data to the database" },
+  { text: "Calculating the credit score" },
+  { text: "Welcome to your dashboard" },
+];
 
 interface FormData {
   ageRange: string;
@@ -73,6 +80,7 @@ interface FormData {
 
 const MultiStepFormContainer: React.FC = () => {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const [formData, setFormData] = useState<FormData>({
@@ -157,10 +165,14 @@ const MultiStepFormContainer: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log('Form Data:', formData);
-
+      setLoading(true);
       const response = await axios.post('/api/submitForm', formData);
-      router.push('/dashboard');
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, loadingStates.length * 2000);
+      setTimeout(() => {
+        setLoading(false);
+      }, (loadingStates.length * 2000) + 1000);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -227,7 +239,13 @@ const MultiStepFormContainer: React.FC = () => {
   };
   return (
     <div>
-      {renderStep()}
+      {loading ? (
+        <MultiStepLoader loadingStates={loadingStates} loading={loading} duration={3000} />
+      ) : (
+        <div>
+          {renderStep()}
+        </div>
+      )}
     </div>
   );
 };
