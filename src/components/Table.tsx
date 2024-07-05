@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import TrinityRingsSpinner from './LoadingState';
 import Spinner from './LoadingState';
 
 interface FormDataItem {
@@ -27,7 +26,8 @@ export function DataTable() {
   const [formData, setFormData] = useState<FormDataItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchData = () => {
+    setLoading(true);
     axios.get('/api/formData')
       .then(response => {
         setFormData(response.data.data);
@@ -37,6 +37,10 @@ export function DataTable() {
         console.error('Error fetching data:', error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   if (loading) {
@@ -44,38 +48,45 @@ export function DataTable() {
   }
 
   return (
-    <Table>
-      <TableCaption>Data from MongoDB collection `formData`.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>ID</TableHead>
-          <TableHead>Demographics Score</TableHead>
-          <TableHead>Business Score</TableHead>
-          <TableHead>Farming Score</TableHead>
-          <TableHead>Finance Score</TableHead>
-          <TableHead>Social Score</TableHead>
-          <TableHead>Total Score</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {formData.map((item) => (
-          <TableRow key={item.id}>
-            <TableCell>{item.id}</TableCell>
-            <TableCell>{item.demographicsScore}</TableCell>
-            <TableCell>{item.businessScore}</TableCell>
-            <TableCell>{item.farmingScore}</TableCell>
-            <TableCell>{item.financeScore}</TableCell>
-            <TableCell>{item.socialScore}</TableCell>
-            <TableCell>{item.totalScore}</TableCell>
+    <div>
+      <button
+        onClick={fetchData}
+        className="mb-4 px-8 py-2 bg-teal-400 text-white border border-transparent rounded hover:bg-white hover:text-gray-800 hover:border-teal-400 transition-all text-sm"
+      >
+        Refresh Data
+      </button>
+      <Table>
+        <TableCaption>Data from MongoDB collection `formData`.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>ID</TableHead>
+            <TableHead>Demographics Score</TableHead>
+            <TableHead>Business Score</TableHead>
+            <TableHead>Farming Score</TableHead>
+            <TableHead>Finance Score</TableHead>
+            <TableHead>Social Score</TableHead>
+            <TableHead>Total Score</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      {/* If you want to show totals or other footer data, you can add it here */}
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={7}>Total Rows: {formData.length}</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {formData.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell>{item.id}</TableCell>
+              <TableCell>{item.demographicsScore}</TableCell>
+              <TableCell>{item.businessScore}</TableCell>
+              <TableCell>{item.farmingScore}</TableCell>
+              <TableCell>{item.financeScore}</TableCell>
+              <TableCell>{item.socialScore}</TableCell>
+              <TableCell>{item.totalScore}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={7}>Total Rows: {formData.length}</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   );
 }
