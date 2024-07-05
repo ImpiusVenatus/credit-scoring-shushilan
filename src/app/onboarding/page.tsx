@@ -1,11 +1,11 @@
 "use client";
- 
+
 import { motion } from "framer-motion";
 import React from "react";
 import { AuroraBackground } from '@/components/ui/aurora-background';
 import MultiStepFormContainer from "@/components/forms/MultiStepForm";
- 
-export function MultiStepFormPage() {
+
+const MultiStepFormPage: React.FC = () => {
   return (
     <AuroraBackground>
       <motion.div
