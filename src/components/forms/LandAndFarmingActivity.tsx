@@ -9,59 +9,60 @@ interface FormData {
   dependents: string;
   educationLevel: string;
   primaryOccupation: string;
-  secondaryOccupation: boolean;
+  secondaryOccupation: string;
   residenceDuration: string;
   homeOwnership: string;
   householdSize: string;
-  profession: string,
-  businessDuration: string,
-  productTypes: string,
-  monthlyRevenue: string,
-  regularCustomers: boolean,
-  businessLicense: boolean,
-  salesRecords: boolean,
-  savingsAccount: boolean,
-  businessLoan: string,
-  creditManagement: string,
-  loanPurpose: string,
-  awareOfTerms: boolean,
-  ownAgriculturalLand: boolean;
+  profession: string;
+  businessDuration: string;
+  productTypes: string;
+  monthlyRevenue: string;
+  regularCustomers: string;
+  businessLicense: string;
+  salesRecords: string;
+  savingsAccount: string;
+  businessLoan: string;
+  creditManagement: string;
+  loanPurpose: string;
+  awareOfTerms: string;
+  ownAgriculturalLand: string;
   acresOwned: string;
   cropTypes: string;
   cropCyclesPerYear: string;
-  cropRotation: boolean;
-  irrigationFacilities: boolean;
-  ownLivestock: boolean;
+  cropRotation: string;
+  irrigationFacilities: string;
+  ownLivestock: string;
   livestockTypes: string;
   livestockCount: string;
   farmingExperience: string;
-  modernFarmingTechniques: boolean;
+  modernFarmingTechniques: string;
   farmingTechniquesUsed: string;
   annualCropYield: string;
-  sellProduceLocally: boolean;
-  storageFacilities: boolean;
-  cropLossPastFiveYears: boolean;
+  sellProduceLocally: string;
+  storageFacilities: string;
+  cropLossPastFiveYears: string;
   cropLossReasons: string;
   phoneType: string;
-  useMobileForTransactions: boolean;
-  haveSavingsAccount: boolean;
-  otherFormsOfSavings: boolean;
-  takenLoanBefore: boolean;
-  loanRepaidOnTime: boolean;
-  outstandingLoans: boolean;
-  budgetMonthlyExpenses: boolean;
-  keepFinancialRecords: boolean;
-  formalFinancialEducation: boolean;
-  communityMember: boolean;
-  leadershipPosition: boolean;
-  participateCommunityEvents: boolean;
-  goodReputation: boolean;
-  recommendedForLoan: boolean;
-  familySuccessfulLoans: boolean;
-  collaborateCommunity: boolean;
-  disputesCommunity: boolean;
+  useMobileForTransactions: string;
+  haveSavingsAccount: string;
+  otherFormsOfSavings: string;
+  takenLoanBefore: string;
+  loanRepaidOnTime: string;
+  outstandingLoans: string;
+  budgetMonthlyExpenses: string;
+  keepFinancialRecords: string;
+  formalFinancialEducation: string;
+  communityMember: string;
+  leadershipPosition: string;
+  participateCommunityEvents: string;
+  goodReputation: string;
+  recommendedForLoan: string;
+  familySuccessfulLoans: string;
+  collaborateCommunity: string;
+  disputesCommunity: string;
   interactLocalLeaders: string;
-  socialSupport: boolean;
+  socialSupport: string;
+  communityVouching: string;
 }
 
 interface LandFarmingFormProps {

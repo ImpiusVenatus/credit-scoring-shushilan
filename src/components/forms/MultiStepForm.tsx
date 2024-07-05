@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import DemographicsForm from './DemographicForm';
 import BusinessQuestionsForm from './BusinessQuestionsForm';
 import LandFarmingForm from './LandAndFarmingActivity';
 import FinancialPlanningForm from './FinancialLiteracyPlanning';
 import SocialNetworkForm from './SocialNetworking';
+import CommunityVouchingForm from './CommunityVouching';
 
 interface FormData {
   ageRange: string;
@@ -12,7 +14,7 @@ interface FormData {
   dependents: string;
   educationLevel: string;
   primaryOccupation: string;
-  secondaryOccupation: boolean;
+  secondaryOccupation: string;
   residenceDuration: string;
   homeOwnership: string;
   householdSize: string;
@@ -20,117 +22,128 @@ interface FormData {
   businessDuration: string;
   productTypes: string;
   monthlyRevenue: string;
-  regularCustomers: boolean;
-  businessLicense: boolean;
-  salesRecords: boolean;
-  savingsAccount: boolean;
+  regularCustomers: string;
+  businessLicense: string;
+  salesRecords: string;
+  savingsAccount: string;
   businessLoan: string;
   creditManagement: string;
   loanPurpose: string;
-  awareOfTerms: boolean;
-  ownAgriculturalLand: boolean;
+  awareOfTerms: string;
+  ownAgriculturalLand: string;
   acresOwned: string;
   cropTypes: string;
   cropCyclesPerYear: string;
-  cropRotation: boolean;
-  irrigationFacilities: boolean;
-  ownLivestock: boolean;
+  cropRotation: string;
+  irrigationFacilities: string;
+  ownLivestock: string;
   livestockTypes: string;
   livestockCount: string;
   farmingExperience: string;
-  modernFarmingTechniques: boolean;
+  modernFarmingTechniques: string;
   farmingTechniquesUsed: string;
   annualCropYield: string;
-  sellProduceLocally: boolean;
-  storageFacilities: boolean;
-  cropLossPastFiveYears: boolean;
+  sellProduceLocally: string;
+  storageFacilities: string;
+  cropLossPastFiveYears: string;
   cropLossReasons: string;
   phoneType: string;
-  useMobileForTransactions: boolean;
-  haveSavingsAccount: boolean;
-  otherFormsOfSavings: boolean;
-  takenLoanBefore: boolean;
-  loanRepaidOnTime: boolean;
-  outstandingLoans: boolean;
-  budgetMonthlyExpenses: boolean;
-  keepFinancialRecords: boolean;
-  formalFinancialEducation: boolean;
-  communityMember: boolean;
-  leadershipPosition: boolean;
-  participateCommunityEvents: boolean;
-  goodReputation: boolean;
-  recommendedForLoan: boolean;
-  familySuccessfulLoans: boolean;
-  collaborateCommunity: boolean;
-  disputesCommunity: boolean;
+  useMobileForTransactions: string;
+  haveSavingsAccount: string;
+  otherFormsOfSavings: string;
+  takenLoanBefore: string;
+  loanRepaidOnTime: string;
+  outstandingLoans: string;
+  budgetMonthlyExpenses: string;
+  keepFinancialRecords: string;
+  formalFinancialEducation: string;
+  communityMember: string;
+  leadershipPosition: string;
+  participateCommunityEvents: string;
+  goodReputation: string;
+  recommendedForLoan: string;
+  familySuccessfulLoans: string;
+  collaborateCommunity: string;
+  disputesCommunity: string;
   interactLocalLeaders: string;
-  socialSupport: boolean;
+  socialSupport: string;
+  communityVouching: string;
 }
 
 const MultiStepFormContainer: React.FC = () => {
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState<FormData>({
+    //Demographic Data
     ageRange: '',
     gender: '',
     maritalStatus: '',
     dependents: '',
     educationLevel: '',
     primaryOccupation: '',
-    secondaryOccupation: false,
+    secondaryOccupation: '',
     residenceDuration: '',
     homeOwnership: '',
     householdSize: '',
+
+    //Business Data
     profession: '',
     businessDuration: '',
     productTypes: '',
     monthlyRevenue: '',
-    regularCustomers: false,
-    businessLicense: false,
-    salesRecords: false,
-    savingsAccount: false,
+    regularCustomers: '',
+    businessLicense: '',
+    salesRecords: '',
+    savingsAccount: '',
     businessLoan: '',
     creditManagement: '',
     loanPurpose: '',
-    awareOfTerms: false,
-    ownAgriculturalLand: false,
+    awareOfTerms: '',
+
+    //Land and Farming Data
+    ownAgriculturalLand: '',
     acresOwned: '',
     cropTypes: '',
     cropCyclesPerYear: '',
-    cropRotation: false,
-    irrigationFacilities: false,
-    ownLivestock: false,
+    cropRotation: '',
+    irrigationFacilities: '',
+    ownLivestock: '',
     livestockTypes: '',
     livestockCount: '',
     farmingExperience: '',
-    modernFarmingTechniques: false,
+    modernFarmingTechniques: '',
     farmingTechniquesUsed: '',
     annualCropYield: '',
-    sellProduceLocally: false,
-    storageFacilities: false,
-    cropLossPastFiveYears: false,
+    sellProduceLocally: '',
+    storageFacilities: '',
+    cropLossPastFiveYears: '',
     cropLossReasons: '',
+
+    //Financial Literacy Data
     phoneType: '',
-    useMobileForTransactions: false,
-    haveSavingsAccount: false,
-    otherFormsOfSavings: false,
-    takenLoanBefore: false,
-    loanRepaidOnTime: false,
-    outstandingLoans: false,
-    budgetMonthlyExpenses: false,
-    keepFinancialRecords: false,
-    formalFinancialEducation: false,
-    communityMember: false,
-    leadershipPosition: false,
-    participateCommunityEvents: false,
-    goodReputation: false,
-    recommendedForLoan: false,
-    familySuccessfulLoans: false,
-    collaborateCommunity: false,
-    disputesCommunity: false,
+    useMobileForTransactions: '',
+    haveSavingsAccount: '',
+    otherFormsOfSavings: '',
+    takenLoanBefore: '',
+    loanRepaidOnTime: '',
+    outstandingLoans: '',
+    budgetMonthlyExpenses: '',
+    keepFinancialRecords: '',
+    formalFinancialEducation: '',
+
+    //Social Network Data
+    communityMember: '',
+    leadershipPosition: '',
+    participateCommunityEvents: '',
+    goodReputation: '',
+    recommendedForLoan: '',
+    familySuccessfulLoans: '',
+    collaborateCommunity: '',
+    disputesCommunity: '',
     interactLocalLeaders: '',
-    socialSupport: false,
-  });  
+    socialSupport: '',
+    communityVouching: '',
+  });
 
   const nextStep = () => {
     setStep(prevStep => prevStep + 1);
@@ -138,6 +151,16 @@ const MultiStepFormContainer: React.FC = () => {
 
   const prevStep = () => {
     setStep(prevStep => prevStep - 1);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log('Form Data:', formData);
+
+      const response = await axios.post('/api/submitForm', formData);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   const renderStep = () => {
@@ -167,7 +190,7 @@ const MultiStepFormContainer: React.FC = () => {
             nextStep={nextStep}
             prevStep={prevStep}
           />
-        )
+        );
       case 4:
         return (
           <FinancialPlanningForm
@@ -176,23 +199,29 @@ const MultiStepFormContainer: React.FC = () => {
             nextStep={nextStep}
             prevStep={prevStep}
           />
-        )
+        );
       case 5:
         return (
-          <SocialNetworkForm 
+          <SocialNetworkForm
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
             prevStep={prevStep}
           />
-        )
+        );
+      case 6:
+        return (
+          <CommunityVouchingForm
+            formData={formData}
+            setFormData={setFormData}
+            handleSubmit={handleSubmit}
+            prevStep={prevStep}
+          />
+        );
       default:
         return null;
     }
   };
-
-  console.log('Current Form Data:', formData);
-
   return (
     <div>
       {renderStep()}
