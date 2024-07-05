@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import DemographicsForm from './DemographicForm';
 import BusinessQuestionsForm from './BusinessQuestionsForm';
 import LandFarmingForm from './LandAndFarmingActivity';
@@ -72,6 +73,7 @@ interface FormData {
 
 const MultiStepFormContainer: React.FC = () => {
   const [step, setStep] = useState(1);
+  const router = useRouter();
 
   const [formData, setFormData] = useState<FormData>({
     //Demographic Data
@@ -158,6 +160,7 @@ const MultiStepFormContainer: React.FC = () => {
       console.log('Form Data:', formData);
 
       const response = await axios.post('/api/submitForm', formData);
+      router.push('/dashboard');
     } catch (error) {
       console.error('Error submitting form:', error);
     }

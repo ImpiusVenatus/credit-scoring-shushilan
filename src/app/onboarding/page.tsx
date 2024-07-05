@@ -18,7 +18,7 @@ const MultiStepFormPage: React.FC = () => {
         }}
         className="relative flex flex-col gap-4 items-center justify-center px-4 py-16"
       >
-        <h1 className="text-5xl mb-8 text-gray-800 font-bold">Rini Model Demo</h1>
+        <h1 className="text-5xl mb-8 text-gray-800 font-bold">Rini Microfinance Scoring Model Demo</h1>
         <MultiStepFormContainer />
       </motion.div>
     </AuroraBackground>
