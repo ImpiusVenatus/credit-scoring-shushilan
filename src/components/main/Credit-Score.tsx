@@ -6,7 +6,7 @@ export default function CreditScoring() {
     <div className="container flex gap-8 py-12">
         <div className="w-[50%]">
             <Image
-              src="/data-quality.png.webp"
+              src="/asset01.png"
               alt="Data Quality"
               width={100}
               height={100}

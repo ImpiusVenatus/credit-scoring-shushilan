@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import CustomSelect from '../ui/CustomSelect';
 
 interface FormData {
@@ -78,7 +77,6 @@ const FinancialPlanningForm: React.FC<FinancialPlanningFormProps> = ({
   nextStep,
   prevStep,
 }) => {
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleChange = (input: keyof FormData, value: string | boolean) => {
     setFormData(prevState => ({
@@ -173,7 +171,7 @@ const FinancialPlanningForm: React.FC<FinancialPlanningFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 4: Financial Literacy and Planning</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 3: Financial Literacy and Planning</h2>
 
       {questions.map((question, index) => (
         <div

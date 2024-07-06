@@ -89,7 +89,7 @@ const CommunityVouchingForm: React.FC<CommunityVouchingFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 6: Community Vouching</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Final Step: Community Vouching</h2>
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}

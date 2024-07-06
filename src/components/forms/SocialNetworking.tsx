@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import CustomSelect from '../ui/CustomSelect';
-import { motion } from 'framer-motion';
 
 interface FormData {
   ageRange: string;
@@ -79,7 +78,6 @@ const SocialNetworkForm: React.FC<SocialNetworkFormProps> = ({
   nextStep,
   prevStep,
 }) => {
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleChange = (input: keyof FormData, value: string | boolean) => {
     setFormData(prevState => ({
@@ -174,7 +172,7 @@ const SocialNetworkForm: React.FC<SocialNetworkFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 5: Social Network and Reputation</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 4: Social Network and Reputation</h2>
 
       {questions.map((question, index) => (
         <div

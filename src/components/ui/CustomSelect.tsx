@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import React from 'react';
 
 interface CustomSelectProps {
   label: string;
@@ -10,52 +8,46 @@ interface CustomSelectProps {
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, options, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleSelect = (value: string) => {
     onChange(value);
-    setIsOpen(false);
   };
 
   return (
     <div className="relative mb-4">
-      <button
-        type="button"
-        className="w-full mt-1 px-3 py-2 bg-white border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <div className="w-full mt-1 px-3 py-2 bg-white border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-teal-200 focus:ring-opacity-50">
         <div className="flex justify-between items-center">
-          <span>{String(value) || 'Select an option'}</span> {/* Ensure value is converted to string */}
-          {isOpen ? (
-            <ChevronUp className="w-5 h-5 text-gray-500" />
-          ) : (
-            <ChevronDown className="w-5 h-5 text-gray-500" />
-          )}
+          <span>{String(value) || 'Select an option'}</span>
         </div>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.ul
-            className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+      </div>
+      <div className="w-full mt-2">
+        {options.map((option) => (
+          <label
+            key={option.value}
+            className={`cursor-pointer flex items-center px-4 py-2 hover:bg-teal-100 ${
+              String(option.value) === String(value) ? 'bg-teal-200' : ''
+            }`}
           >
-            {options.map((option) => (
-              <li
-                key={option.value}
-                className={`cursor-pointer px-4 py-2 hover:bg-indigo-100 ${
-                  String(option.value) === String(value) ? 'bg-indigo-200' : ''
+            <span className="mr-2">
+              <input
+                type="radio"
+                name="custom-select"
+                value={option.value}
+                checked={String(option.value) === String(value)}
+                onChange={() => handleSelect(option.value)}
+                className="hidden"
+              />
+              <span
+                className={`w-4 h-4 rounded-full border-2 flex items-center ${
+                  String(option.value) === String(value)
+                    ? 'border-gray-800 bg-teal-400'
+                    : 'border-gray-800'
                 }`}
-                onClick={() => handleSelect(option.value)}
-              >
-                {option.label}
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
+              ></span>
+            </span>
+            {option.label}
+          </label>
+        ))}
+      </div>
     </div>
   );
 };

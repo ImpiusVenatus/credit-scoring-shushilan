@@ -28,8 +28,8 @@ const NavigationMenu = React.forwardRef<
       )}
       {...props}
     >
-      <a href="/home">
-        <div className="curson-pointer flex items-center gap-2 bg-gray-700 py-4 px-6 rounded-2xl">
+      <a href="/">
+        <div className="max-sm:hidden cursor-pointer flex items-center gap-2 bg-gray-700 py-4 px-6 rounded-2xl">
             <Image 
               src="/R.png"
               alt="Logo"
@@ -49,7 +49,7 @@ const NavigationMenu = React.forwardRef<
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         ) : (
-          <button className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+          <button className="md:px-8 py-2 rounded-md bg-teal-400 text-white font-bold sm:text-sm sm:px-2 md:text-md transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
             Get a Demo
           </button>
         )}

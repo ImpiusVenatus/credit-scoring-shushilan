@@ -199,7 +199,7 @@ const MultiStepFormContainer: React.FC = () => {
         );
       case 3:
         return (
-          <LandFarmingForm
+          <FinancialPlanningForm
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
@@ -208,15 +208,6 @@ const MultiStepFormContainer: React.FC = () => {
         );
       case 4:
         return (
-          <FinancialPlanningForm
-            formData={formData}
-            setFormData={setFormData}
-            nextStep={nextStep}
-            prevStep={prevStep}
-          />
-        );
-      case 5:
-        return (
           <SocialNetworkForm
             formData={formData}
             setFormData={setFormData}
@@ -224,7 +215,7 @@ const MultiStepFormContainer: React.FC = () => {
             prevStep={prevStep}
           />
         );
-      case 6:
+      case 5:
         return (
           <CommunityVouchingForm
             formData={formData}
