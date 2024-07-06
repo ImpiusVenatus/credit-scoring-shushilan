@@ -17,7 +17,7 @@ export default function DataPreparation() {
             <h2 className="text-6xl md:text-5xl font-bold">Data Preparation
             Services for ML</h2>
             <p className="py-8 text-lg text-[#74788b]">Prepare your data for machine learning processing to attain the highest 
-            quality in AI data analytics. The data science experts at GiniMachine provide services in data cleaning and preparation, 
+            quality in AI data analytics. The data science experts at Rini provide services in data cleaning and preparation, 
             designed to enhance the accuracy of your ML models.
             </p>
             <div className="flex justify-start gap-16">

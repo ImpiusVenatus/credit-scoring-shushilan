@@ -18,7 +18,7 @@ export default function DebtCollection() {
               Alternative Lenders
             </h4>
             <p className="py-8 w-[80%] text-[#74788b] text-md">
-            GiniMachine scores credit applications and loans using diverse alternative data sources, 
+            Rini scores credit applications and loans using diverse alternative data sources, 
             from rental and utility payments to asset ownership and public records. It’s like having a 
             crystal ball as it zeroes in on high-risk assets and anticipates loan repayments. Streamline 
             your operations with an automated pre-approval system for incoming applications and fine-tune 

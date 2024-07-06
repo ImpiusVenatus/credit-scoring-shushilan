@@ -47,8 +47,8 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Contacts</h4>
             <ul>
-              <li className="mb-2 text-gray-600">UAB HES Europe, Vilnius Konstitucijos pr. 21A</li>
-              <li className="mb-2 text-gray-600">invite@ginimachine.com</li>
+              <li className="mb-2 text-gray-600">House-105, Road-04, Block-B, Banani</li>
+              <li className="mb-2 text-gray-600">buckyypayment@gmail.com</li>
               <li className="mb-2 flex gap-2">
                     <SocialIcon network="facebook" href="https://www.facebook.com" />
                     <SocialIcon network="linkedin" href="https://www.linkedin.com" />
