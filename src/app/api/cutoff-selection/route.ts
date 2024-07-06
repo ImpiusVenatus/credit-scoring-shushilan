@@ -7,39 +7,43 @@ const client = new MongoClient(mongoUri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const sliderValue = searchParams.get('value');
+  if (sliderValue === null) {
+    return NextResponse.json({ message: 'Slider value is missing' }, { status: 400 });
+  }
+  const value = parseInt(sliderValue, 10);
+
+  if (isNaN(value)) {
+    return NextResponse.json({ message: 'Invalid slider value' }, { status: 400 });
+  }
+
   try {
     await client.connect();
     const db = client.db();
-    
     const formData = await db.collection('formData').find({}).toArray();
 
-    const data = formData.map(item => ({
-      id: item._id.toString(),
-      demographicsScore: item.demographicsScore,
-      occupationScore: item.occupationScore,
-      financeScore: item.financeScore,
-      socialScore: item.socialScore,
-      totalScore: item.totalScore,
-      approval: item.approval
-    }));
+    const aboveValue = formData.filter(item => item.totalScore > value).length;
+    const belowValue = formData.filter(item => item.totalScore <= value).length;
 
     await client.close();
 
     return NextResponse.json({
-      message: 'Form data fetched successfully',
-      data: data,
+      message: 'Data fetched successfully',
+      aboveValue,
+      belowValue,
     });
   } catch (error) {
     if (error instanceof MongoNetworkError) {
       console.error('MongoDB network error:', error);
       return NextResponse.json({ message: 'MongoDB network error' }, { status: 500 });
     } else {
-      console.error('Error fetching form data:', error);
-      return NextResponse.json({ message: 'Error fetching form data' }, { status: 500 });
+      console.error('Error fetching data:', error);
+      return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
     }
   }
 }

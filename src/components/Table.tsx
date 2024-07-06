@@ -15,8 +15,7 @@ import Spinner from './LoadingState';
 interface FormDataItem {
   id: string;
   demographicsScore: number;
-  businessScore: number;
-  farmingScore: number;
+  occupationScore: number;
   financeScore: number;
   socialScore: number;
   totalScore: number;
@@ -61,8 +60,7 @@ export function DataTable() {
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Demographics Score</TableHead>
-            <TableHead>Business Score</TableHead>
-            <TableHead>Farming Score</TableHead>
+            <TableHead>Occupation Score</TableHead>
             <TableHead>Finance Score</TableHead>
             <TableHead>Social Score</TableHead>
             <TableHead>Total Score</TableHead>
@@ -73,8 +71,7 @@ export function DataTable() {
             <TableRow key={item.id}>
               <TableCell>{item.id}</TableCell>
               <TableCell>{item.demographicsScore}</TableCell>
-              <TableCell>{item.businessScore}</TableCell>
-              <TableCell>{item.farmingScore}</TableCell>
+              <TableCell>{item.occupationScore}</TableCell>
               <TableCell>{item.financeScore}</TableCell>
               <TableCell>{item.socialScore}</TableCell>
               <TableCell>{item.totalScore}</TableCell>

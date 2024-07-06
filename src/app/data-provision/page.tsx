@@ -27,7 +27,7 @@ export default function DataProvision() {
           </div>
           <div className="w-[50%] max-md:w-[70%] max-md:m-auto border-r-8">
             <Image 
-                src='/data-provision-banner.png.webp'
+                src='/asset03.png'
                 alt="contact image"
                 width={100}
                 height={100}
@@ -58,10 +58,10 @@ export default function DataProvision() {
             </div>
           </div>
         </div>
-        <div className="bg-slate-200 p-8 rounded-3xl">
-          <div className="pr-16 w-[60%] max-md:w-[100%]">
-            <h2 className="text-6xl md:text-5xl sm:text-3xl font-bold">Data Provision for Finance Machine Learning Modeling</h2>
-            <p className="py-8 md:text-lg sm:text-md text-[#74788b]">
+        <div className="bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 rounded-3xl">
+          <div className="pr-16">
+            <h2 className="text-6xl md:text-5xl sm:text-3xl font-bold text-white max-w-[70%]">Data Provision for Finance Machine Learning Modeling</h2>
+            <p className="py-8 md:text-lg sm:text-sm text-gray-300 max-w-[60%]">
               Businesses often lack the necessary historical data to develop their 
               ML models. Whether you’re a startup in debt collection or lending, or 
               a large financial institution exploring new markets, our Data Provision 

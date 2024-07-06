@@ -47,7 +47,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Contacts</h4>
             <ul>
-              <li className="mb-2 text-gray-600">House-105, Road-04, Block-B, Banani</li>
+              <li className="mb-2 text-gray-600">House-105, Road-04, Block-B, Banani, Dhaka, Bangladesh</li>
               <li className="mb-2 text-gray-600">buckyypayment@gmail.com</li>
               <li className="mb-2 flex gap-2">
                     <SocialIcon network="facebook" href="https://www.facebook.com" />
@@ -61,7 +61,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Powered</h4>
             <ul>
-              <li className="mb-2 text-gray-600">by HES FinTech © {currentYear}</li>
+              <li className="mb-2 text-gray-600">by Upscale Studios © {currentYear}</li>
               <li className="mb-2"><a href="#" className="text-gray-600">Privacy Policy</a></li>
             </ul>
           </div>

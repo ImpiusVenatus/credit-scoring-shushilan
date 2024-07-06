@@ -92,9 +92,10 @@ export async function POST(req: NextRequest) {
     const demographicsScore = calculateDemographicsScore(formData);
     const businessScore = calculateBusinessScore(formData);
     const farmingScore = calculateFarmingScore(formData);
+    const occupationScore = businessScore + farmingScore;
     const financeScore = calculateFinanceScore(formData);
     const socialScore = calculateSocialScore(formData);
-    const totalScore = (demographicsScore*0.2) + ((businessScore + farmingScore)*0.25) + (financeScore*0.30) + (socialScore*0.25);
+    const totalScore = (demographicsScore*0.2) + (occupationScore*0.25) + (financeScore*0.30) + (socialScore*0.25);
 
     const json2csvParser = new Parser();
     const csv = json2csvParser.parse(formData);
@@ -104,11 +105,11 @@ export async function POST(req: NextRequest) {
       formData,
       csvData: csv,
       demographicsScore,
-      businessScore,
-      farmingScore,
+      occupationScore,
       financeScore,
       socialScore,
-      totalScore
+      totalScore,
+      approval: 'pending',
     });
 
     console.log('Form data saved to MongoDB:', result.insertedId);
