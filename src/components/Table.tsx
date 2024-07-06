@@ -48,12 +48,15 @@ export function DataTable() {
 
   return (
     <div>
-      <button
-        onClick={fetchData}
-        className="mb-4 px-8 py-2 bg-teal-400 text-white border border-transparent rounded hover:bg-white hover:text-gray-800 hover:border-teal-400 transition-all text-sm"
-      >
-        Refresh Data
-      </button>
+      <div className='flex gap-4'>
+        <h4 className="text-2xl font-semibold">List of all applications</h4>
+        <button
+          onClick={fetchData}
+          className="mb-4 px-4 py-1 bg-gray-800 text-white border-2 border-transparent rounded hover:bg-white hover:text-gray-800 font-semibold hover:border-gray-800 transition-all text-[12px]"
+        >
+          Refresh Data
+        </button>
+      </div>
       <Table>
         <TableCaption>Data from MongoDB collection `formData`.</TableCaption>
         <TableHeader>

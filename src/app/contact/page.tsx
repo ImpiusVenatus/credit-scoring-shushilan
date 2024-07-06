@@ -37,7 +37,7 @@ export default function Home() {
               <SocialIcon network="youtube" href="https://www.youtube.com" />
           </div>
         </div>
-        <div className="w-[50%] border-r-8">
+        <div className="w-[50%]">
           <Image 
               src='/hello.png'
               alt="contact image"

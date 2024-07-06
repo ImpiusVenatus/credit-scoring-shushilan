@@ -15,7 +15,7 @@ import {
 import { SliderBar } from "@/components/SliderBar";
 
 export default function Dashboard() {
-  const targetPercentage = 63;
+  const targetPercentage = 87;
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Dashboard() {
         <div className="py-16 px-8 flex justify-between flex-wrap gap-8">
           <div>
             <div className="flex items-center gap-4">
-              <h4 className="text-2xl font-semibold">Rini Index</h4>
+              <h4 className="text-2xl font-semibold">Rini Accuracy</h4>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -79,23 +79,6 @@ export default function Dashboard() {
           </div>
           <div className="px-8">
             <SliderBar />
-            <div className="flex justify-between gap-8 py-4">
-              <div>
-                <p className="text-[#64748b] text-sm">Total application count: 2,000</p>
-              </div>
-            </div>
-            <div className="flex justify-between gap-8">
-              <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">1,224</h6>
-                <p className="text-[#64748b] text-sm">to be approved</p>
-                <p className="text-[#64748b] text-sm">937/289</p>
-              </div>
-              <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">776</h6>
-                <p className="text-[#64748b] text-sm">to be rejected</p>
-                <p className="text-[#64748b] text-sm">620/156</p>
-              </div>
-            </div>
           </div>
           <div className="px-8">
             <h4 className="text-2xl font-semibold">Start Scoring</h4>
@@ -110,7 +93,6 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="py-4">
-          <h4 className="text-2xl font-semibold">Current Data</h4>
           <DataTable />
         </div>
       </div>

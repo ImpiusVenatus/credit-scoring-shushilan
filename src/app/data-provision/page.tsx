@@ -25,7 +25,7 @@ export default function DataProvision() {
               </button>
             </div>
           </div>
-          <div className="w-[50%] max-md:w-[70%] max-md:m-auto border-r-8">
+          <div className="w-[50%] max-md:w-[70%] max-md:m-auto">
             <Image 
                 src='/asset03.png'
                 alt="contact image"

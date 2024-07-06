@@ -26,7 +26,7 @@ export default function DataPreparation() {
               </button>
             </div>
           </div>
-          <div className="w-[50%] border-r-8">
+          <div className="w-[50%]">
             <Image 
                 src='/data-preparation-banner2.png.webp'
                 alt="contact image"
