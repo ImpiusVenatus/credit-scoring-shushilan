@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import DemographicsForm from './DemographicForm';
 import BusinessQuestionsForm from './BusinessQuestionsForm';
-import LandFarmingForm from './LandAndFarmingActivity';
 import FinancialPlanningForm from './FinancialLiteracyPlanning';
 import SocialNetworkForm from './SocialNetworking';
 import CommunityVouchingForm from './CommunityVouching';
 import { MultiStepLoader  } from '../ui/multi-step-loader';
+import UserForm from './UserForm';
 
 const loadingStates = [
   { text: "Logging data to the database" },
@@ -16,6 +16,9 @@ const loadingStates = [
 ];
 
 interface FormData {
+  fullName: string,
+  email: string,
+  photo: string,
   ageRange: string;
   gender: string;
   maritalStatus: string;
@@ -85,6 +88,9 @@ const MultiStepFormContainer: React.FC = () => {
 
   const [formData, setFormData] = useState<FormData>({
     //Demographic Data
+    fullName: '',
+    email: '',
+    photo: '',
     ageRange: '',
     gender: '',
     maritalStatus: '',
@@ -182,15 +188,15 @@ const MultiStepFormContainer: React.FC = () => {
     switch (step) {
       case 1:
         return (
-          <DemographicsForm
+          <UserForm 
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
           />
-        );
+        )
       case 2:
         return (
-          <BusinessQuestionsForm
+          <DemographicsForm
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
@@ -199,7 +205,7 @@ const MultiStepFormContainer: React.FC = () => {
         );
       case 3:
         return (
-          <FinancialPlanningForm
+          <BusinessQuestionsForm
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
@@ -208,7 +214,7 @@ const MultiStepFormContainer: React.FC = () => {
         );
       case 4:
         return (
-          <SocialNetworkForm
+          <FinancialPlanningForm
             formData={formData}
             setFormData={setFormData}
             nextStep={nextStep}
@@ -216,6 +222,15 @@ const MultiStepFormContainer: React.FC = () => {
           />
         );
       case 5:
+        return (
+          <SocialNetworkForm
+            formData={formData}
+            setFormData={setFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        );
+      case 6:
         return (
           <CommunityVouchingForm
             formData={formData}

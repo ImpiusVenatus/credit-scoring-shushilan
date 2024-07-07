@@ -4,6 +4,9 @@ import CustomSelect from '../ui/CustomSelect';
 import { motion } from 'framer-motion';
 
 interface FormData {
+  fullName: string,
+  email: string,
+  photo: string,
   ageRange: string;
   gender: string;
   maritalStatus: string;

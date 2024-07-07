@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button"
 
 interface FormDataItem {
   id: string;
+  fullName: string;
   demographicsScore: number;
   occupationScore: number;
   financeScore: number;
@@ -82,7 +83,7 @@ export function AdminDataTable() {
         <TableCaption>Data from MongoDB collection `formData`.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Demographics Score</TableHead>
             <TableHead>Occupation Score</TableHead>
             <TableHead>Finance Score</TableHead>
@@ -94,7 +95,7 @@ export function AdminDataTable() {
         <TableBody>
           {formData.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{item.id}</TableCell>
+              <TableCell>{item.fullName}</TableCell>
               <TableCell>{item.demographicsScore}</TableCell>
               <TableCell>{item.occupationScore}</TableCell>
               <TableCell>{item.financeScore}</TableCell>

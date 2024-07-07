@@ -2,6 +2,9 @@ import React from 'react';
 import CustomSelect from '../ui/CustomSelect';
 
 interface FormData {
+  fullName: string,
+  email: string,
+  photo: string,
   ageRange: string;
   gender: string;
   maritalStatus: string;
@@ -171,7 +174,7 @@ const FinancialPlanningForm: React.FC<FinancialPlanningFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 3: Financial Literacy and Planning</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 4: Financial Literacy and Planning</h2>
 
       {questions.map((question, index) => (
         <div

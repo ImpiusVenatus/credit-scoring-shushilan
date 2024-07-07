@@ -2,6 +2,9 @@ import React from 'react';
 import CustomSelect from '../ui/CustomSelect';
 
 interface FormData {
+  fullName: string,
+  email: string,
+  photo: string,
   ageRange: string;
   gender: string;
   maritalStatus: string;
@@ -68,12 +71,14 @@ interface DemographicsFormProps {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   nextStep: () => void;
+  prevStep: () => void;
 }
 
 const DemographicsForm: React.FC<DemographicsFormProps> = ({
   formData,
   setFormData,
   nextStep,
+  prevStep,
 }) => {
 
   const handleChange = (input: keyof FormData, value: string | boolean) => {
@@ -183,7 +188,7 @@ const DemographicsForm: React.FC<DemographicsFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 1: Demographics</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 2: Demographics</h2>
 
       {questions.map((question, index) => (
         <div
@@ -201,6 +206,9 @@ const DemographicsForm: React.FC<DemographicsFormProps> = ({
         </div>
       ))}
       <div className='flex gap-4'>
+        <button onClick={prevStep} className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+              Previous
+            </button>
         <button onClick={nextStep} className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
           Next
         </button>

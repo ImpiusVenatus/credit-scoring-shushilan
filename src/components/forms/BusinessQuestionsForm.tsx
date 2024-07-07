@@ -4,6 +4,9 @@ import CustomSelect from '../ui/CustomSelect';
 import { motion } from 'framer-motion';
 
 interface FormData {
+  fullName: string,
+  email: string,
+  photo: string,
   ageRange: string;
   gender: string;
   maritalStatus: string;
@@ -336,7 +339,7 @@ const BusinessQuestionsForm: React.FC<BusinessQuestionsFormProps> = ({
 
   return (
     <div className='bg-white border border-gray-400/20 rounded-xl p-8'>
-      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 2: Business Questions</h2>
+      <h2 className='text-xl text-gray-800 font-semibold pb-4'>Step 3: Business Questions</h2>
 
       <CustomSelect
         label="Select your profession"
