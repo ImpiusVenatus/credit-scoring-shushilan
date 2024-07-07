@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { NavigationMenuBar } from "@/components/ShadcnNavbar";
 import CircularProgressBar from "@/components/CircularProgressBar";
 import { useEffect, useState } from "react";
-
+import axios from 'axios';
 import { Button } from "@/components/ui/button"
 import {
   Tooltip,
@@ -13,12 +13,41 @@ import {
 } from "@/components/ui/tooltip"
 import { SliderBar } from "@/components/SliderBar";
 import { AdminDataTable } from "@/components/AdminTable";
-import Image from "next/image";
 import Icon from "@/components/Icon";
+import Spinner from "@/components/LoadingState";
+
+interface FormDataItem {
+  id: string;
+  demographicsScore: number;
+  occupationScore: number;
+  financeScore: number;
+  socialScore: number;
+  totalScore: number;
+}
 
 export default function AdminDashboard() {
   const targetPercentage = 63;
   const [percentage, setPercentage] = useState(0);
+
+  const [formData, setFormData] = useState<FormDataItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = () => {
+    setLoading(true);
+    axios.get('/api/formData')
+      .then(response => {
+        setFormData(response.data.data);
+        setLoading(false); 
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setTimeout(() => setPercentage(targetPercentage), 100);
@@ -60,8 +89,13 @@ export default function AdminDashboard() {
             <h4 className="text-2xl font-semibold">Dataset Statistic</h4>
             <div className="flex justify-between gap-8 py-4">
               <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">10,000</h6>
-                <p className="text-[#64748b] text-sm">Total Record Count</p>
+              {loading ?
+                  <Spinner size={50} color="#14b8a6" /> :
+                  <div>
+                    <h6 className="text-3xl font-semibold">{formData.length}</h6>
+                    <p className="text-[#64748b] text-sm">Total Record Count</p>
+                  </div>
+                }
               </div>
               <div className="w-[50%]">
                 <h6 className="text-3xl font-semibold">2,000</h6>

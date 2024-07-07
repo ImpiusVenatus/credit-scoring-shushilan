@@ -18,7 +18,7 @@ export default function DebtCollection() {
           </div>
           <div className="w-[50%]">
             <Image
-              src="/data-quality.png.webp"
+              src="/asset04.png"
               alt="Data Quality"
               width={100}
               height={100}

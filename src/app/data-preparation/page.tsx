@@ -28,7 +28,7 @@ export default function DataPreparation() {
           </div>
           <div className="w-[50%]">
             <Image 
-                src='/data-preparation-banner2.png.webp'
+                src='/asset05.png'
                 alt="contact image"
                 width={100}
                 height={100}
@@ -59,10 +59,10 @@ export default function DataPreparation() {
             </div>
           </div>
         </div>
-        <div className="bg-slate-200 p-8 rounded-3xl">
+        <div className="bg-[url('/bg.png')] bg-cover bg-no-repeat p-8 rounded-3xl">
           <div className="pr-16 w-[60%]">
-            <h2 className="text-6xl md:text-5xl font-bold">Data Cleaning and Preparation Services</h2>
-            <p className="py-8 text-lg text-[#74788b]">
+            <h2 className="text-6xl md:text-5xl font-bold text-white">Data Cleaning and Preparation Services</h2>
+            <p className="py-8 text-lg text-gray-300">
             Our team of data engineers will eliminate irrelevant records, duplicates, and manual errors 
             from your initial data and ensure that all the essential attributes required for thorough 
             analysis are included in your dataset.
@@ -87,7 +87,7 @@ export default function DataPreparation() {
           </div>
           <div className="w-[50%]">
             <Image
-              src="/data-quality.png.webp"
+              src="/asset04.png"
               alt="Data Quality"
               width={100}
               height={100}
@@ -99,7 +99,7 @@ export default function DataPreparation() {
         <div className="flex  gap-8 py-12">
           <div className="w-[50%]">
             <Image
-              src="/data-rowboost.png.webp"
+              src="/asset06.png"
               alt="Data Quality"
               width={100}
               height={100}

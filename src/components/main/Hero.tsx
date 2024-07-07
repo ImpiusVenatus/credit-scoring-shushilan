@@ -1,9 +1,10 @@
+import Image from 'next/image';
 import React from 'react';
 export default function Hero() {
   return (
-    <div>
+    <div className='container'>
       <div
-        className="bg-cover bg-no-repeat bg-center py-16 text-center"
+        className="pt-16 pb-8 text-center"
       >
         <h1 className="text-gray-800 text-center font-bold text-5xl py-8 m-auto rounded-2xl max-w-[40rem]">
           No-Code AI Decision-Making Software
@@ -18,6 +19,16 @@ export default function Hero() {
             Start Free Trial
           </button>
         </a>
+      </div>
+      <div className='border rounded-xl border-gray-200 mx-8'>
+        <Image 
+          src="/dashboard.jpg"
+          alt='dashboard'
+          width={100}
+          height={100}
+          layout='responsive'
+          className='rounded-xl'
+        />
       </div>
     </div>
   );
