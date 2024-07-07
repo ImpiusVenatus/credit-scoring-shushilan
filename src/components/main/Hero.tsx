@@ -20,14 +20,14 @@ export default function Hero() {
           </button>
         </a>
       </div>
-      <div className='border rounded-xl border-gray-200 mx-8'>
+      <div className='mx-8'>
         <Image 
           src="/dashboard.jpg"
           alt='dashboard'
           width={100}
           height={100}
           layout='responsive'
-          className='rounded-xl'
+          className='rounded-xl shadow-lg'
         />
       </div>
     </div>

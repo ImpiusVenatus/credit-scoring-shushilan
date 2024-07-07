@@ -22,7 +22,6 @@ export default function Home() {
       <Features />
       <DebtCollection />
       <Conclusion />
-      <WobbleCardDemo />
       <Footer />
     </main>
   );

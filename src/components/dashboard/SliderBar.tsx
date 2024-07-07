@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
 import axios from 'axios';
-import Spinner from "./LoadingState";
+import Spinner from "../LoadingState";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 

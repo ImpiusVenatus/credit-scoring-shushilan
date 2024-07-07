@@ -12,8 +12,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { SliderBar } from "@/components/SliderBar";
+import { SliderBar } from "@/components/dashboard/SliderBar";
 import Spinner from "@/components/LoadingState";
+import ScoreDistribution from "@/components/dashboard/ScoreDistribution";
 
 interface FormDataItem {
   id: string;
@@ -46,6 +47,38 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  const [value, setValue] = useState(69);
+  const [data, setData] = useState({ aboveValue: 0, belowValue: 0 });
+  const [approvalRate, setApprovalRate] = useState<number | null>(null);
+  const [rejectionRate, setRejectionRate] = useState<number | null>(null);
+
+  const applyCutoff = async (initialLoad = false) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`/api/cutoff-selection?value=${value}`);
+      const result = response.data;
+      setData({ aboveValue: result.aboveValue, belowValue: result.belowValue });
+
+      const rate = (result.aboveValue / (result.aboveValue + result.belowValue)) * 100;
+      setApprovalRate(rate);
+      const rejectRate = (result.belowValue / (result.aboveValue + result.belowValue)) * 100;
+      setRejectionRate(rejectRate);
+
+      if (initialLoad) {
+        const formDataResponse = await axios.get('/api/formData');
+        setFormData(formDataResponse.data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    applyCutoff(true);
   }, []);
 
   useEffect(() => {
@@ -86,31 +119,37 @@ export default function Dashboard() {
           </div>
           <div className="px-8">
             <h4 className="text-2xl font-semibold">Dataset Statistic</h4>
-            <div className="flex justify-between gap-8 py-4">
-              <div className="w-[50%]">
-                {loading ?
+            {loading ?
                   <Spinner size={50} color="#14b8a6" /> :
+            <div>
+              <div className="flex justify-between gap-8 py-4">
+                <div className="w-[50%]">
+                    <div>
+                      <h6 className="text-3xl font-semibold">{formData.length}</h6>
+                      <p className="text-[#64748b] text-sm">Total Record Count</p>
+                    </div>
+                </div>
+                <div className="w-[50%]">
+                  <h6 className="text-3xl font-semibold">2,000</h6>
+                  <p className="text-[#64748b] text-sm">Test Record Count</p>
+                </div>
+              </div>
+              <div className="flex justify-between gap-8">
+                <div className="w-[50%]">
                   <div>
-                    <h6 className="text-3xl font-semibold">{formData.length}</h6>
-                    <p className="text-[#64748b] text-sm">Total Record Count</p>
+                    <h6 className="text-3xl font-semibold">{approvalRate ? `${approvalRate.toFixed(2)}%` : 'N/A'}</h6>
+                    <p className="text-[#64748b] text-sm">Approved</p>
                   </div>
-                }
-              </div>
-              <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">2,000</h6>
-                <p className="text-[#64748b] text-sm">Test Record Count</p>
-              </div>
-            </div>
-            <div className="flex justify-between gap-8">
-              <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">9,100</h6>
-                <p className="text-[#64748b] text-sm">Marked as good</p>
-              </div>
-              <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">900</h6>
-                <p className="text-[#64748b] text-sm">Marked as bad</p>
+                </div>
+                <div className="w-[50%]">
+                  <div>
+                    <h6 className="text-3xl font-semibold">{rejectionRate ? `${rejectionRate.toFixed(2)}%` : 'N/A'}</h6>
+                    <p className="text-[#64748b] text-sm">Dispproved</p>
+                  </div>
+                </div>
               </div>
             </div>
+          }
           </div>
           <div className="px-8">
             <SliderBar />
