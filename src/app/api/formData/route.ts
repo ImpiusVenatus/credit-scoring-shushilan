@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, MongoNetworkError, ServerApiVersion } from 'mongodb';
+import { MongoClient, MongoNetworkError, ObjectId, ServerApiVersion } from 'mongodb';
 import { parse } from 'csv-parse/sync';
 
 const mongoUri = process.env.MONGODB_URI || '';
@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
       });
 
       const fullName = parsedCsv[0]?.fullName || 'N/A';
+      const creationDate = new ObjectId(item._id).getTimestamp();
 
       return {
         id: item._id.toString(),
@@ -36,6 +37,7 @@ export async function GET(req: NextRequest) {
         socialScore: item.socialScore,
         totalScore: item.totalScore,
         approval: item.approval,
+        creationDate: creationDate.toISOString(),
       };
     });
 

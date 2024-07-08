@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { format } from 'date-fns';
 import {
   Table,
   TableBody,
@@ -19,6 +20,7 @@ interface FormDataItem {
   financeScore: number;
   socialScore: number;
   totalScore: number;
+  creationDate: string;
 }
 
 export function DataTable() {
@@ -62,6 +64,7 @@ export function DataTable() {
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
+            <TableHead>Date Created</TableHead>
             <TableHead>Demographics Score</TableHead>
             <TableHead>Occupation Score</TableHead>
             <TableHead>Finance Score</TableHead>
@@ -73,6 +76,7 @@ export function DataTable() {
           {formData.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.id}</TableCell>
+              <TableCell>{format(new Date(item.creationDate), 'hh:mma, d MMMM, yyyy')}</TableCell>
               <TableCell>{item.demographicsScore}</TableCell>
               <TableCell>{item.occupationScore}</TableCell>
               <TableCell>{item.financeScore}</TableCell>
