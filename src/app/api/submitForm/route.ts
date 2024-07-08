@@ -112,8 +112,6 @@ export async function POST(req: NextRequest) {
       approval: 'pending',
     });
 
-    console.log('Form data saved to MongoDB:', result.insertedId);
-
     await client.close();
 
     return NextResponse.json({

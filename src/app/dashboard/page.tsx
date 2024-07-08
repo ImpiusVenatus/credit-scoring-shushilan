@@ -44,7 +44,6 @@ export default function Dashboard() {
         new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
       );
       setFormData(sortedData);
-      console.log(sortedData);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
