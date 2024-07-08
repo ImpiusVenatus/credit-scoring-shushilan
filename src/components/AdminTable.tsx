@@ -31,8 +31,8 @@ interface FormDataItem {
   financeScore: number;
   socialScore: number;
   totalScore: number;
-  approval: string
-  creationDate: string
+  approval: string;
+  creationDate: string;
 }
 
 export function AdminDataTable() {
@@ -43,7 +43,10 @@ export function AdminDataTable() {
     setLoading(true);
     axios.get('/api/formData')
       .then(response => {
-        setFormData(response.data.data);
+        const sortedData = response.data.data.sort((a: FormDataItem, b: FormDataItem) => 
+          new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+        );
+        setFormData(sortedData);
         setLoading(false); 
       })
       .catch(error => {
@@ -108,7 +111,7 @@ export function AdminDataTable() {
               <TableCell> 
                 <Dialog>
                   <DialogTrigger asChild>
-                  {item.approval === 'approved' ? (
+                    {item.approval === 'approved' ? (
                       <button className="md:px-8 py-2 rounded-md bg-teal-400 text-white font-bold sm:text-sm sm:px-2 md:text-md transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
                         {item.approval}
                       </button>
@@ -143,7 +146,7 @@ export function AdminDataTable() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={7}>Total Rows: {formData.length}</TableCell>
+            <TableCell colSpan={8}>Total Rows: {formData.length}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

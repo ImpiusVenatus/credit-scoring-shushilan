@@ -15,11 +15,13 @@ import Spinner from './LoadingState';
 
 interface FormDataItem {
   id: string;
+  fullName: string;
   demographicsScore: number;
   occupationScore: number;
   financeScore: number;
   socialScore: number;
   totalScore: number;
+  approval: string;
   creationDate: string;
 }
 
@@ -31,7 +33,10 @@ export function DataTable() {
     setLoading(true);
     axios.get('/api/formData')
       .then(response => {
-        setFormData(response.data.data);
+        const sortedData = response.data.data.sort((a: FormDataItem, b: FormDataItem) => 
+          new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+        );
+        setFormData(sortedData);
         setLoading(false); 
       })
       .catch(error => {
@@ -63,7 +68,7 @@ export function DataTable() {
         <TableCaption>Data from MongoDB collection `formData`.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Date Created</TableHead>
             <TableHead>Demographics Score</TableHead>
             <TableHead>Occupation Score</TableHead>
@@ -75,7 +80,7 @@ export function DataTable() {
         <TableBody>
           {formData.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>{item.id}</TableCell>
+              <TableCell>{item.fullName}</TableCell>
               <TableCell>{format(new Date(item.creationDate), 'hh:mma, d MMMM, yyyy')}</TableCell>
               <TableCell>{item.demographicsScore}</TableCell>
               <TableCell>{item.occupationScore}</TableCell>
