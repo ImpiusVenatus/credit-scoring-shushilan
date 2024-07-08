@@ -17,7 +17,7 @@ const NavigationMenu = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
 >(({ className, children, ...props }, ref) => {
   const pathname = usePathname();
-  const isDashboard = pathname === "/dashboard" || "/admin-dashboard";
+  const isDashboard = pathname === "/dashboard" || pathname === "/admin-dashboard";
 
   return (
     <NavigationMenuPrimitive.Root
