@@ -90,10 +90,10 @@ export default function Dashboard() {
       <NavigationMenuBar />
       <div className="container">
         <div className="flex justify-between gap-8 pt-16">
-          <h2 className="text-5xl font-semibold">Predictive Model</h2>
+          <h2 className="lg:text-5xl font-semibold md:text-4xl text-3xl">Predictive Model</h2>
         </div>
-        <div className="py-16 px-8 flex justify-between flex-wrap gap-8">
-          <div>
+        <div className="py-16 max-md:py-8 flex justify-between flex-wrap">
+          <div className="w-[50%] md:w-[25%] mx-auto">
             <div className="flex items-center gap-4">
               <h4 className="text-2xl font-semibold">Rini Accuracy</h4>
               <TooltipProvider>
@@ -117,48 +117,45 @@ export default function Dashboard() {
               <CircularProgressBar targetPercentage={percentage} duration={1} />
             </div>
           </div>
-          <div className="px-8">
+          <div className="w-[50%] md:w-[25%] mx-auto px-4">
             <h4 className="text-2xl font-semibold">Dataset Statistic</h4>
             {loading ?
                   <Spinner size={50} color="#14b8a6" /> :
             <div>
-              <div className="flex justify-between gap-8 py-4">
+              <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
                 <div className="w-[50%]">
                     <div>
-                      <h6 className="text-3xl font-semibold">{formData.length}</h6>
+                      <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{formData.length}</h6>
                       <p className="text-[#64748b] text-sm">Total Record Count</p>
                     </div>
                 </div>
                 <div className="w-[50%]">
-                  <h6 className="text-3xl font-semibold">2,000</h6>
+                  <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">2,000</h6>
                   <p className="text-[#64748b] text-sm">Test Record Count</p>
                 </div>
               </div>
-              <div className="flex justify-between gap-8">
+              <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
                 <div className="w-[50%]">
-                  <div>
-                    <h6 className="text-3xl font-semibold">{approvalRate ? `${approvalRate.toFixed(2)}%` : 'N/A'}</h6>
+                    <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{approvalRate ? `${approvalRate.toFixed(2)}%` : 'N/A'}</h6>
                     <p className="text-[#64748b] text-sm">Approved</p>
-                  </div>
+                  
                 </div>
                 <div className="w-[50%]">
-                  <div>
-                    <h6 className="text-3xl font-semibold">{rejectionRate ? `${rejectionRate.toFixed(2)}%` : 'N/A'}</h6>
+                    <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{rejectionRate ? `${rejectionRate.toFixed(2)}%` : 'N/A'}</h6>
                     <p className="text-[#64748b] text-sm">Dispproved</p>
-                  </div>
                 </div>
               </div>
             </div>
           }
           </div>
-          <div className="px-8">
+          <div className="w-[50%] md:w-[25%] mx-auto px-4">
             <SliderBar />
           </div>
-          <div className="px-8">
+          <div className="w-[50%] md:w-[25%] mx-auto px-4">
             <h4 className="text-2xl font-semibold">Start Scoring</h4>
             <div className="py-4">
               <div>
-              <button className="px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+              <button className="sm:text-sm lg:text-lg px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
                 Upload Data
               </button>
                 <p className="text-[#64748b] text-sm py-4">or drop a file</p>

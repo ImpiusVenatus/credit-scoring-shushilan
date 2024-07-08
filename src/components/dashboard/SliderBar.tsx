@@ -49,7 +49,7 @@ export function SliderBar({ className, ...props }: SliderProps) {
 
   return (
     <div>
-      <h4 className="text-2xl font-semibold py-4">
+      <h4 className="text-2xl font-semibold pb-4">
         Cutoff Selection {value}
       </h4>
       <Slider
@@ -61,7 +61,7 @@ export function SliderBar({ className, ...props }: SliderProps) {
         {...props}
       />
       <button 
-        className="mt-4 px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500"
+        className="sm:text-sm lg:text-lg mt-4 px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500"
         onClick={() => applyCutoff(false)}
         disabled={loading}
       >
@@ -81,11 +81,11 @@ export function SliderBar({ className, ...props }: SliderProps) {
             </div>
             <div className="flex justify-between gap-8">
               <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">{data.aboveValue}</h6>
+                <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{data.aboveValue}</h6>
                 <p className="text-[#64748b] text-sm">to be approved</p>
               </div>
               <div className="w-[50%]">
-                <h6 className="text-3xl font-semibold">{data.belowValue}</h6>
+                <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{data.belowValue}</h6>
                 <p className="text-[#64748b] text-sm">to be rejected</p>
               </div>
             </div>
