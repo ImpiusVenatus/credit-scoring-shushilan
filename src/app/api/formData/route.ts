@@ -43,17 +43,22 @@ export async function GET(req: NextRequest) {
 
     await client.close();
 
-    return NextResponse.json({
+    return new NextResponse(JSON.stringify({
       message: 'Form data fetched successfully',
       data: data,
+    }), {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+      },
     });
   } catch (error) {
     if (error instanceof MongoNetworkError) {
       console.error('MongoDB network error:', error);
-      return NextResponse.json({ message: 'MongoDB network error' }, { status: 500 });
+      return new NextResponse(JSON.stringify({ message: 'MongoDB network error' }), { status: 500 });
     } else {
       console.error('Error fetching form data:', error);
-      return NextResponse.json({ message: 'Error fetching form data' }, { status: 500 });
+      return new NextResponse(JSON.stringify({ message: 'Error fetching form data' }), { status: 500 });
     }
   }
 }

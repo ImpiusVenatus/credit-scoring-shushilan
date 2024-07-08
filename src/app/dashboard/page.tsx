@@ -32,18 +32,24 @@ export default function Dashboard() {
   const [formData, setFormData] = useState<FormDataItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setLoading(true);
-    axios.get('/api/formData')
-      .then(response => {
-        setFormData(response.data.data);
-        setLoading(false); 
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
+    try {
+      const response = await axios.get('/api/formData', {
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       });
-  };
+      const sortedData = response.data.data.sort((a: { creationDate: string }, b: { creationDate: string }) => 
+        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+      );
+      setFormData(sortedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };  
 
   useEffect(() => {
     fetchData();
