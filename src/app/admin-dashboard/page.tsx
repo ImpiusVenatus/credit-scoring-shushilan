@@ -55,32 +55,34 @@ export default function AdminDashboard() {
   const [approvalRate, setApprovalRate] = useState<number | null>(null);
   const [rejectionRate, setRejectionRate] = useState<number | null>(null);
 
-  const applyCutoff = async (initialLoad = false) => {
-    setLoading(true);
+  const applyCutoff = async () => {
     try {
       const response = await axios.get(`/api/cutoff-selection?value=${value}`);
       const result = response.data;
       setData({ aboveValue: result.aboveValue, belowValue: result.belowValue });
 
       const rate = (result.aboveValue / (result.aboveValue + result.belowValue)) * 100;
-      setApprovalRate(rate);
       const rejectRate = (result.belowValue / (result.aboveValue + result.belowValue)) * 100;
-      setRejectionRate(rejectRate);
 
-      if (initialLoad) {
-        const formDataResponse = await axios.get('/api/fetch-formData');
-        setFormData(formDataResponse.data.data);
-      }
+      return {
+        approvalRate: rate,
+        rejectionRate: rejectRate,
+      };
     } catch (error) {
       console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
+      return {
+        approvalRate: null,
+        rejectionRate: null,
+      };
     }
   };
 
   useEffect(() => {
-    applyCutoff(true);
-  }, []);
+    applyCutoff().then(({ approvalRate, rejectionRate }) => {
+      setApprovalRate(approvalRate);
+      setRejectionRate(rejectionRate);
+    });
+  }, [value]);
 
   useEffect(() => {
     setTimeout(() => setPercentage(targetPercentage), 100);

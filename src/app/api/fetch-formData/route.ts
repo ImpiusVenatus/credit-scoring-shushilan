@@ -11,7 +11,7 @@ const client = new MongoClient(mongoUri, {
   }
 });
 
-export async function GET(request: Request) {
+export async function GET(req: NextRequest) {
   try {
     await client.connect();
     const db = client.db();

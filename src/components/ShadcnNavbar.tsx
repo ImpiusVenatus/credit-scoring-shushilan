@@ -80,11 +80,10 @@ export function NavigationMenuBar() {
                     href="/"
                   >
                     <Image 
-                        src="/next.svg"
-                        alt="logo"
-                        width={100}
-                        height={100}
-                        layout="responsive"
+                      src="/rini 2.png"
+                      alt="Logo"
+                      width={100}
+                      height={100}
                     />
                     <div className="mb-2 mt-4 text-lg font-medium">
                       Credit Scoring
