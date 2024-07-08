@@ -33,7 +33,7 @@ export function SliderBar({ className, ...props }: SliderProps) {
       setData({ aboveValue: result.aboveValue, belowValue: result.belowValue });
 
       if (initialLoad) {
-        const formDataResponse = await axios.get('/api/formData');
+        const formDataResponse = await axios.get('/api/fetch-formData');
         setFormData(formDataResponse.data.data);
       }
     } catch (error) {

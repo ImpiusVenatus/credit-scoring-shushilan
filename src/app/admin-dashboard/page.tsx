@@ -35,7 +35,7 @@ export default function AdminDashboard() {
 
   const fetchData = () => {
     setLoading(true);
-    axios.get('/api/formData')
+    axios.get('/api/fetch-formData')
       .then(response => {
         setFormData(response.data.data);
         setLoading(false); 
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
       setRejectionRate(rejectRate);
 
       if (initialLoad) {
-        const formDataResponse = await axios.get('/api/formData');
+        const formDataResponse = await axios.get('/api/fetch-formData');
         setFormData(formDataResponse.data.data);
       }
     } catch (error) {

@@ -35,7 +35,7 @@ export default function Dashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/formData', {
+      const response = await axios.get('/api/fetch-formData', {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -74,7 +74,7 @@ export default function Dashboard() {
       setRejectionRate(rejectRate);
 
       if (initialLoad) {
-        const formDataResponse = await axios.get('/api/formData');
+        const formDataResponse = await axios.get('/api/fetch-formData');
         setFormData(formDataResponse.data.data);
       }
     } catch (error) {

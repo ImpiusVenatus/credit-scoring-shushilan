@@ -41,7 +41,7 @@ export function AdminDataTable() {
 
   const fetchData = () => {
     setLoading(true);
-    axios.get('/api/formData')
+    axios.get('/api/fetch-formData')
       .then(response => {
         const sortedData = response.data.data.sort((a: FormDataItem, b: FormDataItem) => 
           new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
