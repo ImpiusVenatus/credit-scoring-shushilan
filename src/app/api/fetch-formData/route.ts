@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient, MongoNetworkError, ObjectId, ServerApiVersion } from 'mongodb';
 import { parse } from 'csv-parse/sync';
 
+export const dynamic = 'force-dynamic';
+
 const mongoUri = process.env.MONGODB_URI || '';
 const client = new MongoClient(mongoUri, {
   serverApi: {
