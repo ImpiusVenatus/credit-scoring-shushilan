@@ -14,7 +14,7 @@ const MultiStepFormPage: React.FC = () => {
           <a href="/">
             <div className="max-sm:hidden cursor-pointer flex items-center gap-2 py-4 px-6">
                 <Image 
-                  src="/R.png"
+                  src="/rini 2.png"
                   alt="Logo"
                   width={100}
                   height={100}
