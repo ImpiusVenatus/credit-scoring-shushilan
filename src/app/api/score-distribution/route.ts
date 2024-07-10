@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient, MongoNetworkError, ServerApiVersion } from 'mongodb';
 
+export const dynamic = 'force-dynamic';
+
 const mongoUri = process.env.MONGODB_URI || '';
 const client = new MongoClient(mongoUri, {
   serverApi: {
