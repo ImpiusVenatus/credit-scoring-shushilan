@@ -36,7 +36,7 @@ const MultiStepFormPage: React.FC = () => {
           className="relative flex flex-col gap-4 items-center justify-center px-4 py-16"
         >
           
-          <h1 className="max-w-[40rem] text-center md:text-5xl max-md:text-4xl max-sm:text-3xl mb-8 px-8 text-gray-800 font-semibold">Rini Microfinance Scoring Model Demo</h1>
+          <h1 className="max-w-[40rem] text-center md:text-5xl max-md:text-4xl max-sm:text-3xl mb-8 px-8 text-gray-800 font-semibold">Rini Credit Scoring Model Demo</h1>
           <MultiStepFormContainer />
         </motion.div>
       </AuroraBackground>

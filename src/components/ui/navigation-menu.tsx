@@ -29,12 +29,21 @@ const NavigationMenu = React.forwardRef<
       {...props}
     >
       <a href="/">
-        <div className="max-sm:hidden cursor-pointer flex items-center gap-2 bg-gray-700 px-8 py-4 rounded-2xl">
+        <div className="max-sm:hidden cursor-pointer flex items-center gap-2 px-8 py-4 rounded-2xl">
             <Image 
               src="/rini 2.png"
               alt="Logo"
               width={100}
               height={100}
+              className="pr-2"
+            />
+            <p className="text-gray-500 font-bold">X</p>
+            <Image 
+              src="/cashe.png"
+              alt="Logo"
+              width={120}
+              height={120}
+              className="pb-[4px]"
             />
         </div>
       </a>

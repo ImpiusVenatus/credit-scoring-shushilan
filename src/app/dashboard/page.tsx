@@ -1,20 +1,15 @@
-"use client";
-import Footer from "@/components/Footer";
-import { NavigationMenuBar } from "@/components/ShadcnNavbar";
-import { DataTable } from "@/components/Table";
-import CircularProgressBar from "@/components/CircularProgressBar";
-import { useEffect, useState } from "react";
+"use client"
+import React, { useEffect, useState, ChangeEvent } from "react";
 import axios from 'axios';
-import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { SliderBar } from "@/components/dashboard/SliderBar";
+import { NavigationMenuBar } from "@/components/ShadcnNavbar";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import CircularProgressBar from "@/components/CircularProgressBar";
 import Spinner from "@/components/LoadingState";
-import ScoreDistribution from "@/components/dashboard/ScoreDistribution";
+import Modal from "@/components/Modal";
+import { SliderBar } from "@/components/dashboard/SliderBar";
+import { DataTable } from "@/components/Table";
+import ModelOverviewModal from "@/components/dashboard/ModelOverviewModal";
 
 interface FormDataItem {
   id: string;
@@ -26,11 +21,14 @@ interface FormDataItem {
 }
 
 export default function Dashboard() {
-  const targetPercentage = 87;
+  const targetPercentage = 83;
   const [percentage, setPercentage] = useState(0);
 
   const [formData, setFormData] = useState<FormDataItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [predictions, setPredictions] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showLoadingModal, setShowLoadingModal] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -40,7 +38,7 @@ export default function Dashboard() {
           'Cache-Control': 'no-cache',
         },
       });
-      const sortedData = response.data.data.sort((a: { creationDate: string }, b: { creationDate: string }) => 
+      const sortedData = response.data.data.sort((a: { creationDate: string }, b: { creationDate: string }) =>
         new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
       );
       setFormData(sortedData);
@@ -49,7 +47,7 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   useEffect(() => {
     fetchData();
@@ -91,6 +89,46 @@ export default function Dashboard() {
     setTimeout(() => setPercentage(targetPercentage), 100);
   }, [targetPercentage]);
 
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        // Show loading modal
+        setShowLoadingModal(true);
+
+        const response = await axios.post("http://127.0.0.1:8000/predict/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        const { prob_0, prob_1, predicted_target } = response.data;
+        setPredictions(prob_0);
+        setIsModalOpen(true); // Open main modal after successful prediction
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      } finally {
+        // Hide loading modal after 3 seconds
+        setTimeout(() => {
+          setShowLoadingModal(false);
+        }, 3000);
+      }
+    }
+  };
+
+  const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOverviewModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOverviewModalOpen(false);
+  };
+
   return (
     <div>
       <NavigationMenuBar />
@@ -101,7 +139,7 @@ export default function Dashboard() {
         <div className="py-16 max-md:py-8 flex justify-between flex-wrap">
           <div className="w-[50%] md:w-[25%] mx-auto">
             <div className="flex items-center gap-4">
-              <h4 className="text-2xl font-semibold">Rini Accuracy</h4>
+              <h4 className="text-2xl font-semibold">Model Accuracy</h4>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -111,8 +149,8 @@ export default function Dashboard() {
                     <div className="p-4">
                       <h6 className="font-bold text-gray-700">According to the industry standards:</h6>
                       <ul className="list-disc pl-8">
-                        <li>Credit Index &#60; 0.3 signifies low model <br /> predictive power</li>
-                        <li>0.3 &#60; Credit Index &#60; 0.8 signifies acceptable model predictive power</li>
+                        <li>Credit Index &lt; 0.3 signifies low model predictive power</li>
+                        <li>0.3 &lt; Credit Index &lt; 0.8 signifies acceptable model predictive power</li>
                       </ul>
                     </div>
                   </TooltipContent>
@@ -121,38 +159,42 @@ export default function Dashboard() {
             </div>
             <div className="max-w-[12rem] py-8">
               <CircularProgressBar targetPercentage={percentage} duration={1} />
+              <button onClick={openModal} className="bg-teal-400 text-white px-4 py-2 rounded mt-4">
+                Model Overview
+              </button>
+              <ModelOverviewModal isOpen={isOverviewModalOpen} onClose={closeModal} />
             </div>
           </div>
           <div className="w-[50%] md:w-[25%] mx-auto px-4">
-            <h4 className="text-2xl font-semibold">Dataset Statistic</h4>
-            {loading ?
-                  <Spinner size={50} color="#14b8a6" /> :
-            <div>
-              <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
-                <div className="w-[50%]">
+            <h4 className="text-2xl font-semibold">Dataset Statistics</h4>
+            {loading ? (
+              <Spinner size={50} color="#14b8a6" />
+            ) : (
+              <div>
+                <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
+                  <div className="w-[50%]">
                     <div>
                       <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{formData.length}</h6>
                       <p className="text-[#64748b] text-sm">Total Record Count</p>
                     </div>
+                  </div>
+                  <div className="w-[50%]">
+                    <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">2,000</h6>
+                    <p className="text-[#64748b] text-sm">Test Record Count</p>
+                  </div>
                 </div>
-                <div className="w-[50%]">
-                  <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">2,000</h6>
-                  <p className="text-[#64748b] text-sm">Test Record Count</p>
-                </div>
-              </div>
-              <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
-                <div className="w-[50%]">
+                <div className="flex justify-between max-md:flex-wrap gap-8 max-md:gap-2 py-4 max-md:py-2">
+                  <div className="w-[50%]">
                     <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{approvalRate ? `${approvalRate.toFixed(2)}%` : 'N/A'}</h6>
                     <p className="text-[#64748b] text-sm">Approved</p>
-                  
-                </div>
-                <div className="w-[50%]">
+                  </div>
+                  <div className="w-[50%]">
                     <h6 className="text-xl md:text-2xl lg:text-3xl font-semibold">{rejectionRate ? `${rejectionRate.toFixed(2)}%` : 'N/A'}</h6>
-                    <p className="text-[#64748b] text-sm">Dispproved</p>
+                    <p className="text-[#64748b] text-sm">Disapproved</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          }
+            )}
           </div>
           <div className="w-[50%] md:w-[25%] mx-auto px-4">
             <SliderBar />
@@ -160,11 +202,55 @@ export default function Dashboard() {
           <div className="w-[50%] md:w-[25%] mx-auto px-4">
             <h4 className="text-2xl font-semibold">Start Scoring</h4>
             <div className="py-4">
-              <div>
-              <button className="sm:text-sm lg:text-lg px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
-                Upload Data
-              </button>
-                <p className="text-[#64748b] text-sm py-4">or drop a file</p>
+              <div
+                onDrop={async (event) => {
+                  event.preventDefault();
+                  const file = event.dataTransfer.files[0];
+                  if (file) {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    try {
+                      setShowLoadingModal(true); // Show loading modal on drop
+                      const response = await axios.post("http://127.0.0.1:8000/predict/", formData, {
+                        headers: {
+                          "Content-Type": "multipart/form-data",
+                        },
+                      });
+                      const { prob_0, prob_1, predicted_target } = response.data;
+                      setPredictions(prob_0);
+                      setIsModalOpen(true); // Open main modal after successful prediction
+                    } catch (error) {
+                      console.error("Error uploading file:", error);
+                    } finally {
+                      // Hide loading modal after 3 seconds
+                      setTimeout(() => {
+                        setShowLoadingModal(false);
+                      }, 3000);
+                    }
+                  }
+                }}
+                onDragOver={(event) => event.preventDefault()}
+                className="border-dashed border-2 border-gray-400 p-4 text-center cursor-pointer"
+              >
+                <button
+                  onClick={() => {
+                    const fileInput = document.getElementById('upload-file');
+                    if (fileInput) {
+                      fileInput.click();
+                    }
+                  }}
+                  className="sm:text-sm lg:text-lg px-8 py-2 rounded-md bg-teal-400 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500"
+                >
+                  Upload Data
+                </button>
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="upload-file"
+                />
+                <p className="text-[#64748b] text-sm py-4">or drag and drop a file here</p>
               </div>
             </div>
           </div>
@@ -173,7 +259,18 @@ export default function Dashboard() {
           <DataTable />
         </div>
       </div>
-      <Footer />
+      {/* Loading modal */}
+      {showLoadingModal && !isModalOpen && ( // Ensure loading modal doesn't overlap with main modal
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <Spinner size={50} color="#fff" />
+        </div>
+      )}
+      {isModalOpen && (
+        <Modal
+          predictions={predictions}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
